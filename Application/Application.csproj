@@ -13,4 +13,8 @@
         <PackageReference Include="MlkPwgen" Version="0.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>
