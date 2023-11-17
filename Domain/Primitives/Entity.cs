@@ -1,9 +1,16 @@
+using Domain.Shared;
+
 namespace Domain.Primitives;
 
 public abstract class Entity : IEquatable<Entity>
 {
-    protected Entity(Guid id) => Id = id;
-    
+    protected Entity(Guid id)
+    {
+        Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+        
+        Id = id;
+    }
+
     protected Entity() { }
     
     public Guid Id { get; private init; }

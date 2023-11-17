@@ -30,4 +30,13 @@ public static class Ensure
         if (value > maxValue)
             throw new ArgumentException(message, paramName);
     }
+    
+    public static void NotEmpty(
+        Guid value,
+        string? message = null,
+        [CallerArgumentExpression("value")] string? paramName = null)
+    {
+        if (value == Guid.Empty)
+            throw new ArgumentException(message ?? "The value can not be null", paramName);
+    }
 }
