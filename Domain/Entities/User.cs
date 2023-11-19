@@ -5,7 +5,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
-public class User : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
+public class User : AggregateRoot, IAuditable, IDeletable
 {
     private string _passwordHash;
 

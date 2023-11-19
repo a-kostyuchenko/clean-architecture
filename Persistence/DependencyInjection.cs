@@ -3,6 +3,7 @@ using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Interceptors;
 
 namespace Persistence;
 
@@ -15,10 +16,19 @@ public static class DependencyInjection
         var connection = configuration.GetConnectionString("Database");
         
         Ensure.NotNullOrWhiteSpace(connection);
+
+        services.AddSingleton<UpdateDeletableInterceptor>();
+        services.AddSingleton<UpdateAuditableInterceptor>();
+        services.AddSingleton<InsertOutboxMessagesInterceptor>();
         
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.UseNpgsql(connection).UseSnakeCaseNamingConvention();
+
+            options.AddInterceptors(
+                sp.GetRequiredService<UpdateDeletableInterceptor>(),
+                sp.GetRequiredService<UpdateAuditableInterceptor>(),
+                sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
         });
         
         services.AddScoped<IApplicationDbContext>(sp =>
