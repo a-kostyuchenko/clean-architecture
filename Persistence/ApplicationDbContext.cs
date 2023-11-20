@@ -1,7 +1,5 @@
 using Application.Abstractions.Data;
 using Domain.Entities;
-using Domain.Primitives;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
