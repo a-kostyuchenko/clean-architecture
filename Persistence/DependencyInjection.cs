@@ -23,7 +23,7 @@ public static class DependencyInjection
         
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            options.UseNpgsql(connection).UseSnakeCaseNamingConvention();
+            options.UseNpgsql(connection);
 
             options.AddInterceptors(
                 sp.GetRequiredService<UpdateDeletableInterceptor>(),
