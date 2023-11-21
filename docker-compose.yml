@@ -1,0 +1,21 @@
+﻿services:
+  clean-architecture.api:
+    image: ${DOCKER_REGISTRY-}webapi
+    container_name: eshop-api
+    build:
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    ports:
+      - 5001:8080
+  
+  clean-architecture.db:
+    image: postgres:latest
+    container_name: clean-architecture
+    environment:
+      - POSTGRES_DB=clean_arch
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
