@@ -1,7 +1,7 @@
 ﻿services:
   clean-architecture.api:
     image: ${DOCKER_REGISTRY-}webapi
-    container_name: eshop-api
+    container_name: clean-architecture-api
     build:
       context: .
       dockerfile: WebAPI/Dockerfile
@@ -10,7 +10,7 @@
   
   clean-architecture.db:
     image: postgres:latest
-    container_name: clean-architecture
+    container_name: clean-architecture-db
     environment:
       - POSTGRES_DB=clean_arch
       - POSTGRES_USER=postgres
