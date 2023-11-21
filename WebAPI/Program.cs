@@ -1,14 +1,23 @@
+using Application;
+using Carter;
+using Infrastructure;
+using Persistence;
+using Presentation;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services
+    .AddApplication()
+    .AddInfrastructure()
+    .AddPersistence(builder.Configuration)
+    .AddPresentation();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
+app.MapCarter();
 
 app.Run();
