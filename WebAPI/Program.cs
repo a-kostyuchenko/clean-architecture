@@ -3,6 +3,7 @@ using Carter;
 using Infrastructure;
 using Persistence;
 using Presentation;
+using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,11 @@ builder.Services
     .AddPresentation();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.ApplyMigrations();
+}
 
 app.UseHttpsRedirection();
 
