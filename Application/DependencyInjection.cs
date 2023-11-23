@@ -13,6 +13,7 @@ public static class DependencyInjection
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
 
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
