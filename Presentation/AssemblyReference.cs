@@ -4,5 +4,5 @@ namespace Presentation;
 
 public class AssemblyReference
 {
-    internal static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
+    public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
 }
