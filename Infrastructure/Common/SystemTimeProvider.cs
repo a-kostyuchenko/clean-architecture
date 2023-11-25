@@ -1,6 +1,6 @@
 using Application.Abstractions;
 
-namespace Infrastructure.Services;
+namespace Infrastructure.Common;
 
 public class SystemTimeProvider : ISystemTimeProvider
 {
