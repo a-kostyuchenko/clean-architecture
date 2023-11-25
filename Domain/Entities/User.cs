@@ -1,5 +1,6 @@
 using Domain.Errors;
 using Domain.Primitives;
+using Domain.Services;
 using Domain.Shared;
 using Domain.ValueObjects;
 
@@ -48,4 +49,7 @@ public class User : AggregateRoot, IAuditable, IDeletable
         
         return Result.Success();
     }
+
+    public bool VerifyPasswordHash(string password, IPasswordHashChecker checker) => 
+        !string.IsNullOrWhiteSpace(password) && checker.HashesMatch(_passwordHash, password);
 }
