@@ -9,6 +9,7 @@ namespace Domain.Entities;
 public class User : AggregateRoot, IAuditable, IDeletable
 {
     private string _passwordHash;
+    private List<Role> _roles = new();
 
     private User(FirstName firstName, LastName lastName, Email email, string passwordHash)
         : base(Guid.NewGuid())
@@ -32,7 +33,10 @@ public class User : AggregateRoot, IAuditable, IDeletable
     public DateTime? ModifiedOnUtc { get; set; }
     public DateTime? DeletedOnUtc { get; set; }
     public bool Deleted { get; set; }
-    
+
+    public IReadOnlyCollection<Role> Roles => _roles;
+
+
     public static User Create(FirstName firstName, LastName lastName, Email email, string passwordHash)
     {
         var user = new User(firstName, lastName, email, passwordHash);
