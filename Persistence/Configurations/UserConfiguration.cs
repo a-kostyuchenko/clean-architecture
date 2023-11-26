@@ -2,6 +2,7 @@ using Domain.Entities;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistence.Constants;
 
 namespace Persistence.Configurations;
 
@@ -9,6 +10,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable(TableNames.Users);
+        
         builder.HasKey(x => x.Id);
 
         builder
@@ -40,6 +43,11 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.DeletedOnUtc);
 
         builder.Property(user => user.Deleted).HasDefaultValue(false);
+
+        builder
+            .HasMany(x => x.Roles)
+            .WithMany(x => x.Users)
+            .UsingEntity<UserRole>();
 
         builder.HasQueryFilter(user => !user.Deleted);
     }
