@@ -22,6 +22,7 @@ builder.Services
     .AddAuthenticationAndAuthorization();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -34,7 +35,7 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
-app.UseExceptionHandler();
+app.UseExceptionHandler(opt => { });
 
 app.MapCarter();
 
