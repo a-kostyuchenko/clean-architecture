@@ -4,6 +4,7 @@ using Infrastructure;
 using Persistence;
 using Presentation;
 using Serilog;
+using WebAPI;
 using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,8 @@ builder.Services
     .AddApplication()
     .AddInfrastructure()
     .AddPersistence(builder.Configuration)
-    .AddPresentation();
+    .AddPresentation()
+    .AddAuthenticationAndAuthorization();
 
 var app = builder.Build();
 
