@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Domain.Primitives;
 
-public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
+public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
     where TEnum : Enumeration<TEnum>
 {
 
@@ -16,12 +16,9 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
         Name = name;
     }
 
-    protected Enumeration() => 
-        Name = string.Empty;
-
     public int Id { get; protected init; }
-    public string Name { get; protected init; }
-    
+    public string Name { get; protected init; } = string.Empty;
+
     public static bool operator ==(Enumeration<TEnum>? a, Enumeration<TEnum>? b)
     {
         if (a is null && b is null)
