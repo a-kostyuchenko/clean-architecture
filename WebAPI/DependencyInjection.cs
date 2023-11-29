@@ -1,4 +1,6 @@
+using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using WebAPI.OptionsSetup;
 
 namespace WebAPI;
@@ -15,6 +17,10 @@ public static class DependencyInjection
             .AddJwtBearer();
 
         services.AddAuthorization();
+
+        services.AddScoped<IPermissionService, PermissionService>();
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         return services;
     }
