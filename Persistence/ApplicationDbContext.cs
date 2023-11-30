@@ -21,7 +21,7 @@ public sealed class ApplicationDbContext(DbContextOptions options)
         await base.SaveChangesAsync(cancellationToken);
     
     public new DbSet<TEntity> Set<TEntity>()
-        where TEntity : Entity
+        where TEntity : class
         => base.Set<TEntity>();
 
     public async Task<TEntity?> GetBydIdAsync<TEntity>(Guid id)

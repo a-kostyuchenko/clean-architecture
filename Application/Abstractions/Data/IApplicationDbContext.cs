@@ -16,7 +16,7 @@ public interface IApplicationDbContext
 
     #region Methods
     DbSet<TEntity> Set<TEntity>() 
-        where TEntity : Entity;
+        where TEntity : class;
     Task<TEntity?> GetBydIdAsync<TEntity>(Guid id)
         where TEntity : Entity;
     void Insert<TEntity>(TEntity entity)
