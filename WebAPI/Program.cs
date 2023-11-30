@@ -5,7 +5,6 @@ using Persistence;
 using Presentation;
 using Serilog;
 using WebAPI;
-using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -3,7 +3,6 @@ using Domain.Primitives;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Persistence;
 using Persistence.Outbox;
 using Polly;
 using Polly.Retry;
