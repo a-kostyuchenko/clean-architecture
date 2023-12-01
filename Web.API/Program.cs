@@ -14,6 +14,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services
+    .AddHttpContextAccessor()
     .AddApplication()
     .AddInfrastructure()
     .AddPersistence(builder.Configuration)

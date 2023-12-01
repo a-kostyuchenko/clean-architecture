@@ -17,6 +17,8 @@ public static class DependencyInjection
         services.AddScoped<ISystemTimeProvider, SystemTimeProvider>();
 
         services.AddScoped<IJwtProvider, JwtProvider>();
+        
+        services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
 
         services.AddTransient<IPasswordHasher, PasswordHasher>();
         
