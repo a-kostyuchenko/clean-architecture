@@ -2,20 +2,22 @@ using Application.Abstractions.Data;
 using Domain.Primitives;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Persistence.Outbox;
 using Polly;
 using Polly.Retry;
 using Quartz;
 
-namespace Infrastructure.BackgroundJobs;
+namespace Infrastructure.Outbox;
 
 [DisallowConcurrentExecution]
 public class ProcessOutboxMessagesJob(
     IPublisher publisher,
     IApplicationDbContext dbContext,
-    IUnitOfWork unitOfWork) : IJob
+    IUnitOfWork unitOfWork, IOptions<OutboxOptions> outboxOptions) : IJob
 {
+    private readonly OutboxOptions _outboxOptions = outboxOptions.Value;
     private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All
@@ -27,7 +29,7 @@ public class ProcessOutboxMessagesJob(
             .Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null &&
                         m.Error == null)
-            .Take(20)
+            .Take(_outboxOptions.BatchSize)
             .ToListAsync(context.CancellationToken);
 
         foreach (OutboxMessage outboxMessage in messages)
@@ -38,14 +40,12 @@ public class ProcessOutboxMessagesJob(
                     JsonSerializerSettings);
 
             if (domainEvent is null)
-            {
                 continue;
-            }
 
             AsyncRetryPolicy policy = Policy
                 .Handle<Exception>()
                 .WaitAndRetryAsync(
-                    3,
+                    _outboxOptions.RetriesCount,
                     attempt => TimeSpan.FromMilliseconds(50 * attempt));
 
             PolicyResult result = await policy.ExecuteAndCaptureAsync(() =>
