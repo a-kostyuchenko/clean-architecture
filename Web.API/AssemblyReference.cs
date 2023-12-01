@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace WebAPI;
+namespace Web.API;
 
 public class AssemblyReference
 {

@@ -1,7 +1,7 @@
 using Infrastructure.Outbox;
 using Microsoft.Extensions.Options;
 
-namespace WebAPI.OptionsSetup;
+namespace Web.API.OptionsSetup;
 
 public class OutboxOptionsSetup(IConfiguration configuration) 
     : IConfigureOptions<OutboxOptions>

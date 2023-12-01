@@ -4,7 +4,7 @@ using Infrastructure;
 using Persistence;
 using Presentation;
 using Serilog;
-using WebAPI;
+using Web.API;
 
 var builder = WebApplication.CreateBuilder(args);
 

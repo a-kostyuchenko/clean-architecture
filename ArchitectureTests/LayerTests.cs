@@ -9,7 +9,7 @@ public class LayerTests : BaseTest
     private const string ApplicationNamespace = "Application";
     private const string InfrastructureNamespace = "Infrastructure";
     private const string PresentationNamespace = "Presentation";
-    private const string WebNamespace = "WebAPI";
+    private const string WebNamespace = "Web.API";
     
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherProjects()

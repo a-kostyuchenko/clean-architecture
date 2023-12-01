@@ -30,7 +30,7 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\Persistence\Persistence.csproj" />
       <ProjectReference Include="..\Presentation\Presentation.csproj" />
-      <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
+      <ProjectReference Include="..\Web.API\Web.API.csproj" />
     </ItemGroup>
 
 </Project>

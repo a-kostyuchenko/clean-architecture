@@ -1,9 +1,9 @@
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using WebAPI.OptionsSetup;
+using Web.API.OptionsSetup;
 
-namespace WebAPI;
+namespace Web.API;
 
 public static class DependencyInjection
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace WebAPI.Extensions;
+namespace Web.API.Extensions;
 
 public static class MigrationExtensions
 {
