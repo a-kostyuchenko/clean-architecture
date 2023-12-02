@@ -4,5 +4,5 @@ namespace Application.Abstractions;
 
 public interface IJwtProvider
 {
-    Task<string> Generate(User user);
+    Task<string> GenerateAsync(User user);
 }

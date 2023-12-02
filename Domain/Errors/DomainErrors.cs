@@ -65,4 +65,19 @@ public static class DomainErrors
             "User.CannotChangePassword",
             "The password cannot be changed to the specified password.");
     }
+    
+    public static class Authentication
+    {
+        public static readonly Error UserNotFound = new(
+            "Authentication.UserNotFound",
+            "User with specified email was not found");
+        
+        public static readonly Error InvalidPassword = new(
+            "Authentication.InvalidCredentials",
+            "The specified password is incorrect");
+        
+        public static readonly Error InvalidEmail = new(
+            "Authentication.InvalidEmail",
+            "The specified email is incorrect");
+    }
 }

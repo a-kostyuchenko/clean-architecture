@@ -13,7 +13,7 @@ internal sealed class JwtProvider(IOptions<JwtOptions> jwtOptions, IPermissionSe
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public async Task<string> Generate(User user)
+    public async Task<string> GenerateAsync(User user)
     {
         var claims = new List<Claim>
         {
