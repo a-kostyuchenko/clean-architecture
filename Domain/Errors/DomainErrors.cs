@@ -64,6 +64,14 @@ public static class DomainErrors
         public static readonly Error CannotChangePassword = new(
             "User.CannotChangePassword",
             "The password cannot be changed to the specified password.");
+        
+        public static readonly Error NotFound = new(
+            "User.NotFound",
+            "The user with the specified identifier was not found.");
+
+        public static readonly Error InvalidPermissions = new(
+            "User.InvalidPermissions",
+            "The current user does not have the permissions to perform that operation.");
     }
     
     public static class Authentication

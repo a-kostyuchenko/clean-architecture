@@ -14,7 +14,9 @@ public sealed class Authentication : ICarterModule
     {
         var authentication = app.MapGroup(ApiRoutes.Authentication.Base);
 
-        authentication.MapPost(ApiRoutes.Authentication.Login, async (ISender sender, LoginRequest request) =>
+        authentication.MapPost(ApiRoutes.Authentication.Login, async (
+            LoginRequest request,
+            ISender sender) =>
         {
             var command = new LoginCommand(request.Email, request.Password);
 
