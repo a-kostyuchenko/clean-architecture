@@ -27,7 +27,7 @@ public static class DependencyInjection
         services.ConfigureOptions<OutboxBackgroundJobSetup>();
         
         services.AddQuartz();
-
+        
         services.AddQuartzHostedService(options =>
         {
             options.WaitForJobsToComplete = true;

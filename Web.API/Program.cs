@@ -5,6 +5,7 @@ using Persistence;
 using Presentation;
 using Serilog;
 using Web.API;
+using Web.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure()
     .AddPersistence(builder.Configuration)
-    .AddPresentation()
+    .AddPresentation(builder.Configuration)
     .AddAuthenticationAndAuthorization();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -28,7 +29,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    // app.ApplyMigrations();
+    app.ApplyMigrations();
 }
 
 app.UseSerilogRequestLogging();
@@ -45,7 +46,4 @@ app.MapCarter();
 
 app.Run();
 
-namespace Web.API
-{
-    public partial class Program { }
-}
+public partial class Program { }
