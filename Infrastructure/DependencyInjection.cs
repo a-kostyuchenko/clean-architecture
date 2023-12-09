@@ -1,9 +1,12 @@
 using Application.Abstractions;
 using Application.Abstractions.Cryptography;
 using Domain.Services;
+using FluentValidation;
 using Infrastructure.Authentication;
 using Infrastructure.Common;
+using Infrastructure.Configuration;
 using Infrastructure.Cryptography;
+using Infrastructure.Extensions;
 using Infrastructure.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
@@ -25,6 +28,12 @@ public static class DependencyInjection
         services.AddTransient<IPasswordHashChecker, PasswordHasher>();
 
         services.ConfigureOptions<OutboxBackgroundJobSetup>();
+
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
+
+        services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSection);
+
+        services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSection);
         
         services.AddQuartz();
         

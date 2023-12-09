@@ -9,10 +9,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddAuthenticationAndAuthorization(this IServiceCollection services)
     {
-        services.ConfigureOptions<JwtOptionsSetup>();
         services.ConfigureOptions<JwtBearerOptionsSetup>();
         services.ConfigureOptions<JsonOptionsSetup>();
-        services.ConfigureOptions<OutboxOptionsSetup>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
