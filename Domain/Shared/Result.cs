@@ -35,4 +35,13 @@ public class Result
     
     public static Result<TValue> Create<TValue>(TValue? value) =>
         value is null ? Failure<TValue>(Error.NullValue) : Success(value);
+    
+    public static Result FirstFailureOrSuccess(params Result[] results)
+    {
+        Ensure.NotNull(results);
+        
+        return results.Any(r => r.IsFailure) 
+            ? results.First(r => r.IsFailure) 
+            : Success();
+    }
 }
