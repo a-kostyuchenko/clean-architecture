@@ -21,6 +21,7 @@ public class PermissionAuthorizationHandler
             context.Succeed(requirement);
         }
         
+        context.Fail();
         return Task.CompletedTask;
     }
 }

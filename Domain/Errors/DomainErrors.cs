@@ -72,6 +72,10 @@ public static class DomainErrors
         public static readonly Error InvalidPermissions = new(
             "User.InvalidPermissions",
             "The current user does not have the permissions to perform that operation.");
+        
+        public static readonly Error EmailAlreadyInUse = new(
+            "User.EmailAlreadyInUse",
+            "The specified email is already in use");
     }
     
     public static class Authentication
