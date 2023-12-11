@@ -4,7 +4,6 @@ using Domain.Services;
 using FluentValidation;
 using Infrastructure.Authentication;
 using Infrastructure.Common;
-using Infrastructure.Configuration;
 using Infrastructure.Cryptography;
 using Infrastructure.Extensions;
 using Infrastructure.Outbox;
