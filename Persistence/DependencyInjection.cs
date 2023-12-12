@@ -1,8 +1,10 @@
 using Application.Abstractions.Data;
+using Application.Abstractions.Idempotency;
 using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Idempotency;
 using Persistence.Interceptors;
 
 namespace Persistence;
@@ -36,6 +38,8 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork>(sp =>
             sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IIdempotencyService, IdempotencyService>();
         
         return services;
     }
