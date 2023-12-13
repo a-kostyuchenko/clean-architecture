@@ -1,13 +1,4 @@
 ﻿services:
-  clean-architecture.api:
-    image: ${DOCKER_REGISTRY-}webapi
-    container_name: clean-architecture-api
-    build:
-      context: .
-      dockerfile: WebAPI/Dockerfile
-    ports:
-      - 5001:8080
-  
   clean-architecture.db:
     image: postgres:latest
     container_name: clean-architecture-db
@@ -19,3 +10,12 @@
       - ./.containers/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+        
+  clean-architecture.seq:
+    image: datalust/seq:latest
+    container_name: clean-architecture-seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
