@@ -19,10 +19,6 @@ public sealed class ApplicationDbContext(DbContextOptions options)
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => 
         await base.SaveChangesAsync(cancellationToken);
-    
-    public new DbSet<TEntity> Set<TEntity>()
-        where TEntity : class
-        => base.Set<TEntity>();
 
     public async Task<TEntity?> GetBydIdAsync<TEntity>(Guid id)
         where TEntity : Entity
