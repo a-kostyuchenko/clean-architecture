@@ -4,6 +4,4 @@ using MediatR;
 namespace Application.Abstractions.Messaging;
 
 public interface IDomainEventHandler<in TEvent> : INotificationHandler<TEvent>
-    where TEvent : DomainEvent
-{
-}
+    where TEvent : DomainEvent;
