@@ -1,8 +1,10 @@
 using Application.Abstractions;
+using Application.Abstractions.Caching;
 using Application.Abstractions.Cryptography;
 using Domain.Services;
 using FluentValidation;
 using Infrastructure.Authentication;
+using Infrastructure.Caching;
 using Infrastructure.Common;
 using Infrastructure.Cryptography;
 using Infrastructure.Extensions;
@@ -33,6 +35,9 @@ public static class DependencyInjection
         services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSection);
 
         services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSection);
+        
+        services.AddDistributedMemoryCache();
+        services.AddSingleton<ICacheService, CacheService>();
         
         services.AddQuartz();
         
