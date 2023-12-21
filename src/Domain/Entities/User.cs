@@ -9,7 +9,7 @@ namespace Domain.Entities;
 public class User : AggregateRoot, IAuditable, IDeletable
 {
     private string _passwordHash;
-    private List<Role> _roles = new();
+    private List<Role> _roles = [];
 
     private User(FirstName firstName, LastName lastName, Email email, string passwordHash)
         : base(Guid.NewGuid())
