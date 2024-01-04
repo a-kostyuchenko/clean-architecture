@@ -10,6 +10,8 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
     public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
         builder.HasKey(x => new { x.RoleId, x.PermissionId });
+
+        builder.HasIndex(x => new { x.RoleId, x.PermissionId });
         
         builder.HasData(
             Create(Role.Registered, Permission.ReadUser),
