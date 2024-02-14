@@ -1,7 +1,7 @@
 using System.Reflection;
-using Domain.Primitives;
 using FluentAssertions;
 using NetArchTest.Rules;
+using SharedKernel;
 
 namespace ArchitectureTests.Domain;
 
@@ -12,7 +12,7 @@ public class DomainTests : BaseTest
     {
         var result = Types.InAssembly(DomainAssembly)
             .That()
-            .Inherit(typeof(DomainEvent))
+            .Inherit(typeof(IDomainEvent))
             .Should()
             .BeSealed()
             .GetResult();
@@ -25,7 +25,7 @@ public class DomainTests : BaseTest
     {
         var result = Types.InAssembly(DomainAssembly)
             .That()
-            .Inherit(typeof(DomainEvent))
+            .Inherit(typeof(IDomainEvent))
             .Should()
             .HaveNameEndingWith("DomainEvent")
             .GetResult();

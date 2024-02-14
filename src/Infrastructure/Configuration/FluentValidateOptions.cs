@@ -1,7 +1,7 @@
-using Domain.Shared;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using SharedKernel;
 
 namespace Infrastructure.Configuration;
 

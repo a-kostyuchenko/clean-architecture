@@ -1,5 +1,4 @@
 using Application.Abstractions.Data;
-using Domain.Primitives;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -8,6 +7,7 @@ using Persistence.Outbox;
 using Polly;
 using Polly.Retry;
 using Quartz;
+using SharedKernel;
 
 namespace Infrastructure.Outbox;
 
@@ -34,8 +34,8 @@ public class ProcessOutboxMessagesJob(
 
         foreach (OutboxMessage outboxMessage in messages)
         {
-            DomainEvent? domainEvent = JsonConvert
-                .DeserializeObject<DomainEvent>(
+            IDomainEvent? domainEvent = JsonConvert
+                .DeserializeObject<IDomainEvent>(
                     outboxMessage.Content,
                     JsonSerializerSettings);
 

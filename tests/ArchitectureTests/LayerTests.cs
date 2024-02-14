@@ -81,22 +81,4 @@ public class LayerTests : BaseTest
 
         result.IsSuccessful.Should().BeTrue();
     }
-
-    [Fact]
-    public void Presentation_Should_Not_HaveDependencyOnOtherProjects()
-    {
-        var otherProjects = new[]
-        {
-            InfrastructureNamespace,
-            WebNamespace
-        };
-
-        var result = Types
-            .InAssembly(PresentationAssembly)
-            .ShouldNot()
-            .HaveDependencyOnAny(otherProjects)
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
-    }
 }

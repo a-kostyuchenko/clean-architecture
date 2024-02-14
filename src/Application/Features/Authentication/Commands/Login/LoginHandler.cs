@@ -1,42 +1,40 @@
 using Application.Abstractions;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Errors;
-using Domain.Services;
-using Domain.Shared;
-using Domain.ValueObjects;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel;
 
 namespace Application.Features.Authentication.Commands.Login;
 
 internal sealed class LoginHandler(
     IApplicationDbContext context,
     IPasswordHashChecker passwordHashChecker, 
-    IJwtProvider jwtProvider) : ICommandHandler<LoginCommand, TokenResponse>
+    IJwtProvider jwtProvider) : ICommandHandler<LoginCommand, LoginResponse>
 {
-    public async Task<Result<TokenResponse>> Handle(
+    public async Task<Result<LoginResponse>> Handle(
         LoginCommand request,
         CancellationToken cancellationToken)
     {
         Result<Email> emailResult = Email.Create(request.Email);
 
         if (emailResult.IsFailure)
-            return Result.Failure<TokenResponse>(DomainErrors.Authentication.InvalidEmail);
+            return Result.Failure<LoginResponse>(AuthenticationErrors.InvalidEmail);
 
         var user = await context.Users.FirstOrDefaultAsync(
             u => u.Email == emailResult.Value,
             cancellationToken);
 
         if (user is null)
-            return Result.Failure<TokenResponse>(DomainErrors.Authentication.UserNotFound);
+            return Result.Failure<LoginResponse>(AuthenticationErrors.UserNotFound);
 
         bool passwordValid = user.VerifyPasswordHash(request.Password, passwordHashChecker);
 
         if (!passwordValid)
-            return Result.Failure<TokenResponse>(DomainErrors.Authentication.InvalidPassword);
+            return Result.Failure<LoginResponse>(AuthenticationErrors.InvalidPassword);
 
         string token = await jwtProvider.GenerateAsync(user);
 
-        return Result.Success(new TokenResponse(token));
+        return Result.Success(new LoginResponse(token));
     }
 }

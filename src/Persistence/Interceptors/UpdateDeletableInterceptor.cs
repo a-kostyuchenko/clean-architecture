@@ -1,7 +1,7 @@
-using Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using SharedKernel;
 
 namespace Persistence.Interceptors;
 

@@ -1,5 +1,5 @@
-using Domain.Shared;
 using MediatR;
+using SharedKernel;
 
 namespace Application.Abstractions.Messaging;
 

@@ -1,4 +1,4 @@
-using Application.Abstractions;
+using SharedKernel;
 
 namespace Infrastructure.Common;
 

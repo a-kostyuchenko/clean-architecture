@@ -1,7 +1,8 @@
 using Application.Abstractions.Data;
-using Domain.Entities;
-using Domain.Primitives;
+using Domain.Roles;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel;
 
 namespace Persistence;
 

@@ -1,6 +1,6 @@
-using Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using SharedKernel;
 
 namespace Application.Behaviors;
 

@@ -1,4 +1,4 @@
-using Domain.ValueObjects;
+using Domain.Users;
 
 namespace Application.Abstractions.Cryptography;
 

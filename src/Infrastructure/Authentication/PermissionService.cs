@@ -1,5 +1,5 @@
 using Application.Abstractions.Data;
-using Domain.Entities;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Authentication;

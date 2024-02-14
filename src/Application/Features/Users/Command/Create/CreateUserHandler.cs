@@ -1,11 +1,9 @@
 using Application.Abstractions.Cryptography;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Entities;
-using Domain.Errors;
-using Domain.Shared;
-using Domain.ValueObjects;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel;
 
 namespace Application.Features.Users.Command.Create;
 
@@ -31,7 +29,7 @@ internal sealed class CreateUserHandler(
             return Result.Failure<Guid>(firstFailureOrSuccess.Error);
 
         if (await context.Users.AnyAsync(x => x.Email == emailResult.Value, cancellationToken))
-            return Result.Failure<Guid>(DomainErrors.User.EmailAlreadyInUse);
+            return Result.Failure<Guid>(UserErrors.EmailAlreadyInUse);
         
         string passwordHash = passwordHasher.HashPassword(passwordResult.Value);
 

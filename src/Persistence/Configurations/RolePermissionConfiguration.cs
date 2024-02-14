@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Domain.Roles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Permission = Domain.Enumerations.Permission;

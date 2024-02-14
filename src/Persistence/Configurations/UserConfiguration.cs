@@ -1,5 +1,4 @@
-using Domain.Entities;
-using Domain.ValueObjects;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Constants;

@@ -1,8 +1,8 @@
-using Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 using Persistence.Outbox;
+using SharedKernel;
 
 namespace Persistence.Interceptors;
 
@@ -30,11 +30,11 @@ internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
     {
         var outboxMessages = context
             .ChangeTracker
-            .Entries<AggregateRoot>()
+            .Entries<Entity>()
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
-                var domainEvents = entity.GetDomainEvents();
+                var domainEvents = entity.DomainEvents;
 
                 entity.ClearDomainEvents();
 
@@ -42,7 +42,7 @@ internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
             })
             .Select(domainEvent => new OutboxMessage
             {
-                Id = domainEvent.Id,
+                Id = Guid.NewGuid(),
                 OccurredOnUtc = DateTime.UtcNow,
                 Type = domainEvent.GetType().Name,
                 Content = JsonConvert.SerializeObject(domainEvent, Serializer)

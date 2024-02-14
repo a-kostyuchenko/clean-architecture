@@ -2,25 +2,23 @@ using Application.Abstractions;
 using Application.Abstractions.Cryptography;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Entities;
-using Domain.Errors;
-using Domain.Shared;
-using Domain.ValueObjects;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel;
 
 namespace Application.Features.Users.Command.ChangePassword;
 
 internal sealed class ChangePasswordHandler(
         IApplicationDbContext context,
-        IUserIdentifierProvider userIdentifierProvider,
+        IUserContext userContext,
         IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher)
     : ICommandHandler<ChangePasswordCommand>
 {
     public async Task<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
-        if (request.UserId != userIdentifierProvider.UserId)
-            return Result.Failure(DomainErrors.User.InvalidPermissions);
+        if (request.UserId != userContext.UserId)
+            return Result.Failure(UserErrors.InvalidPermissions);
 
         Result<Password> passwordResult = Password.Create(request.Password);
 
@@ -31,7 +29,7 @@ internal sealed class ChangePasswordHandler(
             .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
         
         if (user is null)
-            return Result.Failure(DomainErrors.User.NotFound);
+            return Result.Failure(UserErrors.NotFound);
 
         string passwordHash = passwordHasher.HashPassword(passwordResult.Value);
 

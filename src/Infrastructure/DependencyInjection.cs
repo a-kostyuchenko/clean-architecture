@@ -1,7 +1,7 @@
 using Application.Abstractions;
 using Application.Abstractions.Caching;
 using Application.Abstractions.Cryptography;
-using Domain.Services;
+using Domain.Users;
 using FluentValidation;
 using Infrastructure.Authentication;
 using Infrastructure.Caching;
@@ -11,6 +11,7 @@ using Infrastructure.Extensions;
 using Infrastructure.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using SharedKernel;
 
 namespace Infrastructure;
 
@@ -22,7 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped<IJwtProvider, JwtProvider>();
         
-        services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
+        services.AddScoped<IUserContext, UserContext>();
 
         services.AddTransient<IPasswordHasher, PasswordHasher>();
         

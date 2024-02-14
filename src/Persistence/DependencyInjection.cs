@@ -1,11 +1,11 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Idempotency;
-using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Idempotency;
 using Persistence.Interceptors;
+using SharedKernel;
 
 namespace Persistence;
 

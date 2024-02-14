@@ -1,74 +1,44 @@
-using System.Collections.Concurrent;
+using System.Buffers;
+using System.Text.Json;
 using Application.Abstractions.Caching;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using Utf8JsonWriter = System.Text.Json.Utf8JsonWriter;
 
 namespace Infrastructure.Caching;
 
 public class CacheService(IDistributedCache distributedCache) : ICacheService
 {
-    private static readonly ConcurrentDictionary<string, bool> CacheKeys = new();
-    private static readonly TimeSpan DefaultExpiration = TimeSpan.FromMinutes(5);
-
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
     {
-        string? cachedValue = await distributedCache.GetStringAsync(
-            key,
-            cancellationToken);
+        byte[]? bytes = await distributedCache.GetAsync(key, cancellationToken);
 
-        if (cachedValue is null)
-            return default;
-
-        var value = JsonConvert.DeserializeObject<T>(cachedValue);
-
-        return value;
+        return bytes is null ? default : Deserialize<T>(bytes);
     }
 
-    public async Task<T> GetAsync<T>(
+    public Task SetAsync<T>(
         string key,
-        Func<CancellationToken, Task<T>> factory,
+        T value,
         TimeSpan? expiration = null,
         CancellationToken cancellationToken = default)
     {
-        var cachedValue = await GetAsync<T>(key, cancellationToken);
+        byte[] bytes = Serialize(value);
 
-        if (cachedValue is not null)
-            return cachedValue;
-
-        cachedValue = await factory(cancellationToken);
-
-        await SetAsync(key, cachedValue, expiration, cancellationToken);
-
-        return cachedValue;
+        return distributedCache.SetAsync(key, bytes, CacheOptions.Create(expiration), cancellationToken);
     }
 
-    public async Task SetAsync<T>(string key, T value, TimeSpan? expiration, CancellationToken cancellationToken = default)
+    public Task RemoveAsync(string key, CancellationToken cancellationToken = default) =>
+        distributedCache.RemoveAsync(key, cancellationToken);
+
+    private static T Deserialize<T>(byte[] bytes)
     {
-        string cacheValue = JsonConvert.SerializeObject(value);
-
-        await distributedCache.SetStringAsync(
-            key,
-            cacheValue,
-            new DistributedCacheEntryOptions{ AbsoluteExpirationRelativeToNow = expiration ?? DefaultExpiration },
-            cancellationToken);
-
-        CacheKeys.TryAdd(key, false);
+        return JsonSerializer.Deserialize<T>(bytes)!;
     }
 
-    public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
+    private static byte[] Serialize<T>(T value)
     {
-        await distributedCache.RemoveAsync(key, cancellationToken);
-
-        CacheKeys.TryRemove(key, out bool _);
-    }
-
-    public async Task RemoveByPrefixAsync(string prefixKey, CancellationToken cancellationToken = default)
-    {
-        IEnumerable<Task> tasks = CacheKeys
-            .Keys
-            .Where(k => k.StartsWith(prefixKey))
-            .Select(k => RemoveAsync(k, cancellationToken));
-
-        await Task.WhenAll(tasks);
+        var buffer = new ArrayBufferWriter<byte>();
+        using var writer = new Utf8JsonWriter(buffer);
+        JsonSerializer.Serialize(writer, value);
+        return buffer.WrittenSpan.ToArray();
     }
 }

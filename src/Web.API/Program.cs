@@ -3,10 +3,10 @@ using Application;
 using Carter;
 using Infrastructure;
 using Persistence;
-using Presentation;
 using Serilog;
 using Web.API;
 using Web.API.Extensions;
+using Web.API.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,4 +63,7 @@ app.MapCarter();
 
 app.Run();
 
-public partial class Program { }
+namespace Web.API
+{
+    public partial class Program { }
+}

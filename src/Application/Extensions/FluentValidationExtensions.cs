@@ -1,5 +1,5 @@
-using Domain.Shared;
 using FluentValidation;
+using SharedKernel;
 
 namespace Application.Extensions;
 
@@ -10,6 +10,6 @@ public static class FluentValidationExtensions
     {
         ArgumentNullException.ThrowIfNull(error, "The error is required");
 
-        return rule.WithErrorCode(error.Code).WithMessage(error.Message);
+        return rule.WithErrorCode(error.Code).WithMessage(error.Description);
     }
 }

@@ -1,22 +1,48 @@
 using Application.Abstractions.Caching;
 using Application.Abstractions.Messaging;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using SharedKernel;
 
 namespace Application.Behaviors;
 
-internal sealed class QueryCachingBehavior<TRequest, TResponse>(ICacheService cacheService) 
+internal sealed class QueryCachingBehavior<TRequest, TResponse>(
+    ICacheService cacheService,
+    ILogger<QueryCachingBehavior<TRequest, TResponse>> logger) 
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICachedQuery
+    where TResponse : Result
 {
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        return await cacheService.GetAsync(
+        TResponse? cachedResult = await cacheService.GetAsync<TResponse>(
             request.Key,
-            _ => next(),
-            request.Expiration,
             cancellationToken);
+
+        string requestName = typeof(TRequest).Name;
+        if (cachedResult is not null)
+        {
+            logger.LogInformation("Cache hit for {RequestName}", requestName);
+
+            return cachedResult;
+        }
+
+        logger.LogInformation("Cache miss for {RequestName}", requestName);
+
+        TResponse result = await next();
+
+        if (result.IsSuccess)
+        {
+            await cacheService.SetAsync(
+                request.Key,
+                result,
+                request.Expiration,
+                cancellationToken);
+        }
+
+        return result;
     }
 }

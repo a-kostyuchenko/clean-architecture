@@ -10,6 +10,8 @@
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.0" />
         <PackageReference Include="Carter" Version="7.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
@@ -31,7 +33,6 @@
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\Persistence\Persistence.csproj" />
-      <ProjectReference Include="..\Presentation\Presentation.csproj" />
     </ItemGroup>
 
 </Project>
