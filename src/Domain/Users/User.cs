@@ -6,7 +6,7 @@ namespace Domain.Users;
 public class User : Entity, IAuditable, IDeletable
 {
     private string _passwordHash;
-    private List<Role> _roles = [];
+    private readonly List<Role> _roles = [];
 
     private User(FirstName firstName, LastName lastName, Email email, string passwordHash)
         : base(Guid.NewGuid())
@@ -31,7 +31,7 @@ public class User : Entity, IAuditable, IDeletable
     public DateTime? DeletedOnUtc { get; set; }
     public bool Deleted { get; set; }
 
-    public IReadOnlyCollection<Role> Roles => _roles;
+    public List<Role> Roles => _roles.ToList();
 
 
     public static User Create(FirstName firstName, LastName lastName, Email email, string passwordHash)

@@ -63,7 +63,4 @@ app.MapCarter();
 
 app.Run();
 
-namespace Web.API
-{
-    public partial class Program { }
-}
+public partial class Program { }

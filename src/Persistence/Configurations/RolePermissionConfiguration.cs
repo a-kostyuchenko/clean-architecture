@@ -1,7 +1,7 @@
 using Domain.Roles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Permission = Domain.Enumerations.Permission;
+using Permission = Domain.Permission;
 
 namespace Persistence.Configurations;
 

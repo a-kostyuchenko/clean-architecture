@@ -19,7 +19,7 @@ internal sealed class QueryCachingBehavior<TRequest, TResponse>(
         CancellationToken cancellationToken)
     {
         TResponse? cachedResult = await cacheService.GetAsync<TResponse>(
-            request.Key,
+            request.CacheKey,
             cancellationToken);
 
         string requestName = typeof(TRequest).Name;
@@ -37,7 +37,7 @@ internal sealed class QueryCachingBehavior<TRequest, TResponse>(
         if (result.IsSuccess)
         {
             await cacheService.SetAsync(
-                request.Key,
+                request.CacheKey,
                 result,
                 request.Expiration,
                 cancellationToken);

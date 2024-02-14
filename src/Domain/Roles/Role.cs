@@ -7,7 +7,9 @@ public sealed class Role(int id, string name) : Enumeration<Role>(id, name)
 {
     public static readonly Role Registered = new(1, "Registered");
 
-    public ICollection<Permission> Permissions { get; set; }
+    private readonly List<Permission> _permissions = [];
+    private readonly List<User> _users = [];
 
-    public ICollection<User> Users { get; set; }
+    public List<Permission> Permissions => _permissions.ToList();
+    public List<User> Users => _users.ToList();
 }

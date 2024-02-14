@@ -2,7 +2,7 @@ namespace Persistence.Idempotency;
 
 internal sealed class IdempotentRequest
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public DateTime CreatedOnUtc { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public DateTime CreatedOnUtc { get; init; }
 }

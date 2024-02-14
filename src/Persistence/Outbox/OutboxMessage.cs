@@ -2,10 +2,10 @@ namespace Persistence.Outbox;
 
 public class OutboxMessage
 {
-    public Guid Id { get; set; }
-    public string Type { get; set; } = string.Empty;
-    public string Content { get; set; } = string.Empty;
-    public DateTime OccurredOnUtc { get; set; }
+    public Guid Id { get; init; }
+    public string Type { get; init; }
+    public string Content { get; init; }
+    public DateTime OccurredOnUtc { get; init; }
     public DateTime? ProcessedOnUtc { get; set; }
     public string? Error { get; set; }
 }

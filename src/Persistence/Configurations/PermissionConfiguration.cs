@@ -14,7 +14,7 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
         builder.HasKey(x => x.Id);
         
         IEnumerable<Permission> permissions = Enum
-            .GetValues<Domain.Enumerations.Permission>()
+            .GetValues<Domain.Permission>()
             .Select(p => new Permission
             {
                 Id = (int)p,

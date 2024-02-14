@@ -2,6 +2,7 @@ using Application.Features.Authentication.Commands.Login;
 using Carter;
 using MediatR;
 using Web.API.Contracts;
+using Web.API.Extensions;
 using Web.API.Infrastructure;
 
 namespace Web.API.Endpoints;
@@ -20,9 +21,7 @@ public sealed class Authentication : ICarterModule
 
             var result = await sender.Send(command);
 
-            return result.IsSuccess 
-                ? Results.Ok(result.Value) 
-                : CustomResults.Problem(result);
+            return result.Match(Results.Ok, CustomResults.Problem);
         });
     }
 }

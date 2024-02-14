@@ -1,4 +1,4 @@
-using Domain.Enumerations;
+using Domain;
 
 namespace Web.API.Extensions;
 
