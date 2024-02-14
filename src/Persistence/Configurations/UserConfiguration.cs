@@ -13,20 +13,17 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         
         builder.HasKey(x => x.Id);
 
-        builder
-            .Property(x => x.Email)
-            .HasConversion(x => x.Value, v => Email.Create(v).Value)
-            .HasMaxLength(Email.MaxLength);
-
-        builder
-            .Property(x => x.FirstName)
-            .HasConversion(x => x.Value, v => FirstName.Create(v).Value)
-            .HasMaxLength(FirstName.MaxLength);
-
-        builder
-            .Property(x => x.LastName)
-            .HasConversion(x => x.Value, v => LastName.Create(v).Value)
-            .HasMaxLength(LastName.MaxLength);
+        builder.ComplexProperty(
+            u => u.Email,
+            b => b.Property(e => e.Value).HasColumnName(nameof(User.Email)).HasMaxLength(Email.MaxLength));
+        
+        builder.ComplexProperty(
+            u => u.FirstName,
+            b => b.Property(e => e.Value).HasColumnName(nameof(User.FirstName)).HasMaxLength(FirstName.MaxLength));
+        
+        builder.ComplexProperty(
+            u => u.LastName,
+            b => b.Property(e => e.Value).HasColumnName(nameof(User.LastName)).HasMaxLength(LastName.MaxLength));
 
         builder.HasIndex(x => x.Email).IsUnique();
 
@@ -35,11 +32,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("PasswordHash")
             .IsRequired();
 
-        builder.Property(user => user.CreatedOnUtc).IsRequired();
-
-        builder.Property(user => user.ModifiedOnUtc);
-
-        builder.Property(user => user.DeletedOnUtc);
+        builder.Property(u => u.CreatedOnUtc).IsRequired();
 
         builder.Property(user => user.Deleted).HasDefaultValue(false);
 
