@@ -35,24 +35,6 @@ internal sealed class UpdateDeletableInterceptor : SaveChangesInterceptor
             entry.Property(nameof(IDeletable.Deleted)).CurrentValue = true;
 
             entry.State = EntityState.Modified;
-            
-            UpdateDeletedEntityEntryReferencesToUnchanged(entry);
-        }
-    }
-    
-    private static void UpdateDeletedEntityEntryReferencesToUnchanged(EntityEntry entityEntry)
-    {
-        if (!entityEntry.References.Any())
-            return;
-
-        foreach (var referenceEntry in entityEntry.References.Where(r => r.TargetEntry?.State == EntityState.Deleted))
-        {
-            if (referenceEntry.TargetEntry == null) 
-                continue;
-            
-            referenceEntry.TargetEntry.State = EntityState.Unchanged;
-
-            UpdateDeletedEntityEntryReferencesToUnchanged(referenceEntry.TargetEntry);
         }
     }
 }
