@@ -12,6 +12,7 @@ public static class ApiRoutes
     {
         public const string Base = "users";
         public const string ChangePassword = "{userId:guid}/change-password";
+        public const string GetById = "{userId:guid}";
     }
 
     public static class Health

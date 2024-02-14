@@ -1,7 +1,8 @@
 using Application.Features.Users.Command.ChangePassword;
 using Application.Features.Users.Command.Create;
+using Application.Features.Users.Queries.GetById;
 using Carter;
-using Domain.Enumerations;
+using Domain;
 using Mapster;
 using MediatR;
 using Web.API.Contracts;
@@ -16,6 +17,18 @@ public sealed class Users : ICarterModule
     {
         var users = app.MapGroup(ApiRoutes.Users.Base);
 
+        users.MapGet(ApiRoutes.Users.GetById, async (
+            Guid userId,
+            ISender sender,
+            CancellationToken cancellationToken) =>
+        {
+            var query = new GetUserByIdQuery(userId);
+            
+            var result = await sender.Send(query, cancellationToken);
+
+            return result.Match(Results.Ok, CustomResults.Problem);
+        });
+
         users.MapPost(string.Empty, async (
             CreateUserRequest request,
             ISender sender) =>
@@ -24,9 +37,7 @@ public sealed class Users : ICarterModule
             
             var result = await sender.Send(command);
             
-            return result.IsSuccess 
-                ? Results.Created()
-                : CustomResults.Problem(result);
+            return result.Match(Results.Created, CustomResults.Problem);
         })
         .RequirePermission(Permission.ReadUser);
 
@@ -39,9 +50,7 @@ public sealed class Users : ICarterModule
 
             var result = await sender.Send(command);
             
-            return result.IsSuccess 
-                ? Results.NoContent() 
-                : CustomResults.Problem(result);
+            return result.Match(Results.NoContent, CustomResults.Problem);
         });
     }
 }
