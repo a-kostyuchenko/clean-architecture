@@ -8,7 +8,7 @@ public record Error
         "Null value was provided",
         ErrorType.Failure);
 
-    public Error(string code, string description, ErrorType type)
+    protected Error(string code, string description, ErrorType type)
     {
         Code = code;
         Description = description;

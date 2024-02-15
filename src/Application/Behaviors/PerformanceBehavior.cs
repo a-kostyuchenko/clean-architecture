@@ -6,8 +6,7 @@ using SharedKernel;
 namespace Application.Behaviors;
 
 internal sealed class PerformanceBehavior<TRequest, TResponse>(
-    ILogger<PerformanceBehavior<TRequest, TResponse>> logger,
-    Stopwatch timer)
+    ILogger<PerformanceBehavior<TRequest, TResponse>> logger)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : Result
@@ -18,6 +17,8 @@ internal sealed class PerformanceBehavior<TRequest, TResponse>(
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        var timer = new Stopwatch();
+        
         timer.Start();
 
         var result = await next();
@@ -29,7 +30,7 @@ internal sealed class PerformanceBehavior<TRequest, TResponse>(
         if (elapsedMilliseconds > MaxElapsedMilliseconds)
         {
             logger.LogWarning(
-                "Long running request {@RequestName}, {@ElapsedMilliseconds} ms, {@DateTimeUtc}",
+                "Long running request {@RequestName} {@ElapsedMilliseconds} ms, {@DateTimeUtc}",
                 typeof(TRequest).Name,
                 elapsedMilliseconds,
                 DateTime.UtcNow);

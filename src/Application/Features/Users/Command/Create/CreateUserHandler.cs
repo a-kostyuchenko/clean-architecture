@@ -1,6 +1,8 @@
+using Application.Abstractions;
 using Application.Abstractions.Cryptography;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Domain.Roles;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
@@ -9,7 +11,6 @@ namespace Application.Features.Users.Command.Create;
 
 internal sealed class CreateUserHandler(
     IApplicationDbContext context,
-    IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher) : ICommandHandler<CreateUserCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -34,11 +35,9 @@ internal sealed class CreateUserHandler(
         string passwordHash = passwordHasher.HashPassword(passwordResult.Value);
 
         var user = User.Create(firstNameResult.Value, lastNameResult.Value, emailResult.Value, passwordHash);
-
+        
         context.Insert(user);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
+        
         return Result.Success(user.Id);
     }
 }

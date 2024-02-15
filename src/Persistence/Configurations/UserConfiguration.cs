@@ -24,9 +24,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ComplexProperty(
             u => u.LastName,
             b => b.Property(e => e.Value).HasColumnName(nameof(User.LastName)).HasMaxLength(LastName.MaxLength));
-
-        builder.HasIndex(x => x.Email).IsUnique();
-
+        
         builder.Property<string>("_passwordHash")
             .HasField("_passwordHash")
             .HasColumnName("PasswordHash")
