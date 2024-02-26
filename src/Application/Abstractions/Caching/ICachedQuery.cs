@@ -1,4 +1,6 @@
-namespace Application.Abstractions.Messaging;
+using Application.Abstractions.Messaging;
+
+namespace Application.Abstractions.Caching;
 
 public interface ICachedQuery<TResponse> : IQuery<TResponse>, ICachedQuery;
 

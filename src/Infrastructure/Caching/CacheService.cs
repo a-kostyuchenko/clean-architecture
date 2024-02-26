@@ -14,6 +14,26 @@ public class CacheService(IDistributedCache distributedCache) : ICacheService
 
         return bytes is null ? default : Deserialize<T>(bytes);
     }
+    
+    public async Task<T> GetAsync<T>(
+        string key,
+        Func<Task<T>> factory,
+        CancellationToken cancellationToken = default)
+        where T : class
+    {
+        T? cachedValue = await GetAsync<T>(key, cancellationToken);
+
+        if (cachedValue is not null)
+        {
+            return cachedValue;
+        }
+
+        cachedValue = await factory();
+
+        await SetAsync(key, cachedValue, null, cancellationToken);
+
+        return cachedValue;
+    }
 
     public Task SetAsync<T>(
         string key,
