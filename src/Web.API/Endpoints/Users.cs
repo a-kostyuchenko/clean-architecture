@@ -38,8 +38,7 @@ public sealed class Users : ICarterModule
             var result = await sender.Send(command);
             
             return result.Match(Results.Created, CustomResults.Problem);
-        })
-        .RequirePermission(Permission.ReadUser);
+        });
 
         users.MapPut(ApiRoutes.Users.ChangePassword, async (
             Guid userId,
