@@ -3,17 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Idempotency;
 
-internal sealed class IdempotencyService : IIdempotencyService
+internal sealed class IdempotencyService(ApplicationDbContext context) : IIdempotencyService
 {
-    private readonly ApplicationDbContext _context;
-
-    public IdempotencyService(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<bool> RequestExistsAsync(Guid requestId) => 
-        await _context.Set<IdempotentRequest>().AnyAsync(x => x.Id == requestId);
+        await context.Set<IdempotentRequest>().AnyAsync(x => x.Id == requestId);
 
     public async Task CreateRequestAsync(Guid requestId, string name)
     {
@@ -24,8 +17,8 @@ internal sealed class IdempotencyService : IIdempotencyService
             CreatedOnUtc = DateTime.UtcNow
         };
 
-        _context.Add(idempotentRequest);
+        context.Add(idempotentRequest);
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }

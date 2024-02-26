@@ -5,27 +5,18 @@ using SharedKernel;
 
 namespace Infrastructure.Configuration;
 
-public class FluentValidateOptions<TOptions> 
+public class FluentValidateOptions<TOptions>(IServiceProvider serviceProvider, string? name)
     : IValidateOptions<TOptions>
     where TOptions : class
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly string? _name;
-
-    public FluentValidateOptions(IServiceProvider serviceProvider, string? name)
+    public ValidateOptionsResult Validate(string? name1, TOptions options)
     {
-        _serviceProvider = serviceProvider;
-        _name = name;
-    }
-
-    public ValidateOptionsResult Validate(string? name, TOptions options)
-    {
-        if (!string.IsNullOrWhiteSpace(_name) && _name != name)
+        if (!string.IsNullOrWhiteSpace(name) && name != name1)
             return ValidateOptionsResult.Skip;
         
         Ensure.NotNull(options);
 
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var validator = scope.ServiceProvider.GetRequiredService<IValidator<TOptions>>();
 
