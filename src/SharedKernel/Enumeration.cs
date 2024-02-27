@@ -66,7 +66,7 @@ public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
     public static IReadOnlyCollection<TEnum> GetValues() => EnumerationsDictionary.Value.Values.ToList();
 
     public static TEnum? FromId(int id) =>
-        EnumerationsDictionary.Value.TryGetValue(id, out TEnum? value) ? value : null;
+        EnumerationsDictionary.Value.GetValueOrDefault(id);
 
     public static TEnum? FromName(string name) =>
         EnumerationsDictionary.Value.Values.SingleOrDefault(x => x.Name == name);
