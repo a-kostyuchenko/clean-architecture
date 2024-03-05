@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 
-namespace Web.API.Infrastructure.OptionsSetup;
+namespace Infrastructure.Common;
 
 public class JsonOptionsSetup : IConfigureOptions<JsonOptions>
 {

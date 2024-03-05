@@ -1,9 +1,9 @@
 using Carter;
 using Infrastructure.Authentication;
+using Infrastructure.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using SharedKernel;
-using Web.API.Infrastructure.OptionsSetup;
 
 namespace Web.API;
 
@@ -11,9 +11,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddAuthenticationAndAuthorization(this IServiceCollection services)
     {
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-        services.ConfigureOptions<JsonOptionsSetup>();
-
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
 

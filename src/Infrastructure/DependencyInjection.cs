@@ -37,6 +37,10 @@ public static class DependencyInjection
 
         services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSection);
         
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
+        
+        services.ConfigureOptions<JsonOptionsSetup>();
+        
         services.AddDistributedMemoryCache();
         services.AddSingleton<ICacheService, CacheService>();
         
