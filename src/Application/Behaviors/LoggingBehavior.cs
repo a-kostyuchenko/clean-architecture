@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 using SharedKernel;
 
 namespace Application.Behaviors;
@@ -14,26 +15,32 @@ internal sealed class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavi
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        string requestName = typeof(TRequest).Name;
+        
         logger.LogInformation(
-            "Starting request {@RequestName}, {@DateTimeUtc}",
-            typeof(TRequest).Name,
+            "Starting request {RequestName}, {DateTimeUtc}",
+            requestName,
             DateTime.UtcNow);
 
         var result = await next();
 
-        if (result.IsFailure)
+        if (result.IsSuccess)
         {
-            logger.LogError(
-                "Request failure {@RequestName}, {@Error}, {@DateTimeUtc}",
-                typeof(TRequest).Name,
-                result.Error,
+            logger.LogInformation(
+                "Completed request {RequestName}, {DateTimeUtc}",
+                requestName,
                 DateTime.UtcNow);
         }
-
-        logger.LogInformation(
-            "Completed request {@RequestName}, {@DateTimeUtc}",
-            typeof(TRequest).Name,
-            DateTime.UtcNow);
+        else
+        {
+            using (LogContext.PushProperty("Error", result.Error, true))
+            {
+                logger.LogError(
+                    "Completed request {RequestName}, {DateTimeUtc} with error",
+                    request,
+                    DateTime.UtcNow);
+            }
+        }
 
         return result;
     }
