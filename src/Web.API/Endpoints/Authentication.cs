@@ -11,7 +11,9 @@ public sealed class Authentication : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var authentication = app.MapGroup(ApiRoutes.Authentication.Base);
+        var authentication = app
+            .MapGroup(ApiRoutes.Authentication.BaseUri)
+            .WithTags(ApiRoutes.Authentication.Tag);
 
         authentication.MapPost(ApiRoutes.Authentication.Login, async (
             LoginRequest request,

@@ -9,7 +9,7 @@ public class Health : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapHealthChecks(ApiRoutes.Health.Base, new HealthCheckOptions
+        app.MapHealthChecks(ApiRoutes.Health.BaseUri, new HealthCheckOptions
         {
             ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
         });

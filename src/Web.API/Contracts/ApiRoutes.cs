@@ -1,22 +1,25 @@
 namespace Web.API.Contracts;
 
-public static class ApiRoutes
+internal static class ApiRoutes
 {
-    public static class Authentication
+    internal static class Authentication
     {
-        public const string Base = "authentication";
-        public const string Login = "login";
+        internal const string Tag = "Authentication";
+        internal const string BaseUri = "authentication";
+        internal const string Login = "login";
     }
     
-    public static class Users
+    internal static class Users
     {
-        public const string Base = "users";
-        public const string ChangePassword = "{userId:guid}/change-password";
-        public const string GetById = "{userId:guid}";
+        internal const string Tag = "Users";
+        internal const string BaseUri = "users";
+        internal const string ResourceId = "userId";
+        internal const string ChangePassword = $"{{{ResourceId}:guid}}/change-password";
+        internal const string GetById = $"{{{ResourceId}:guid}}";
     }
 
-    public static class Health
+    internal static class Health
     {
-        public const string Base = "health";
+        internal const string BaseUri = "health";
     }
 }

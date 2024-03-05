@@ -15,7 +15,9 @@ public sealed class Users : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var users = app.MapGroup(ApiRoutes.Users.Base);
+        var users = app
+            .MapGroup(ApiRoutes.Users.BaseUri)
+            .WithTags(ApiRoutes.Users.Tag);
 
         users.MapGet(ApiRoutes.Users.GetById, async (
             Guid userId,
