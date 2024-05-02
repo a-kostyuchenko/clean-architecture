@@ -1,8 +1,6 @@
-using Application.Abstractions;
 using Application.Abstractions.Cryptography;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Roles;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;

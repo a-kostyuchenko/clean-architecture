@@ -1,8 +1,6 @@
 using Application.Features.Users.Command.ChangePassword;
 using Application.Features.Users.Command.Create;
 using Application.Features.Users.Queries.GetById;
-using Carter;
-using Domain;
 using Mapster;
 using MediatR;
 using Web.API.Contracts;
@@ -11,9 +9,9 @@ using Web.API.Infrastructure;
 
 namespace Web.API.Endpoints;
 
-public sealed class Users : ICarterModule
+public sealed class Users : IEndpointGroup
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void MapGroup(IEndpointRouteBuilder app)
     {
         var users = app
             .MapGroup(ApiRoutes.Users.BaseUri)

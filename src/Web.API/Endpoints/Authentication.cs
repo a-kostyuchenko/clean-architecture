@@ -1,5 +1,4 @@
 using Application.Features.Authentication.Commands.Login;
-using Carter;
 using MediatR;
 using Web.API.Contracts;
 using Web.API.Extensions;
@@ -7,9 +6,9 @@ using Web.API.Infrastructure;
 
 namespace Web.API.Endpoints;
 
-public sealed class Authentication : ICarterModule
+public sealed class Authentication : IEndpointGroup
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void MapGroup(IEndpointRouteBuilder app)
     {
         var authentication = app
             .MapGroup(ApiRoutes.Authentication.BaseUri)

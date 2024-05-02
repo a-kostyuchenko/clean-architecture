@@ -1,4 +1,7 @@
+using System.Reflection;
 using Domain;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Web.API.Endpoints;
 
 namespace Web.API.Extensions;
 
@@ -15,5 +18,35 @@ public static class EndpointExtensions
         ArgumentNullException.ThrowIfNull(permission);
 
         return builder.RequireAuthorization(permission.ToString());
+    }
+
+    public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
+    {
+        ServiceDescriptor[] endpointDescriptors = assembly
+            .DefinedTypes
+            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                           type.IsAssignableTo(typeof(IEndpointGroup)))
+            .Select(type => ServiceDescriptor.Transient(typeof(IEndpointGroup), type))
+            .ToArray();
+        
+        services.TryAddEnumerable(endpointDescriptors);
+
+        return services;
+    }
+
+    public static IApplicationBuilder MapEndpoints(
+        this WebApplication app,
+        RouteGroupBuilder? routeGroupBuilder = null)
+    {
+        var endpointGroups = app.Services.GetRequiredService<IEnumerable<IEndpointGroup>>();
+
+        IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
+
+        foreach (var endpointGroup in endpointGroups)
+        {
+            endpointGroup.MapGroup(builder);
+        }
+
+        return app;
     }
 }

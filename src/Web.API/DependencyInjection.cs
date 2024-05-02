@@ -1,9 +1,6 @@
-using Carter;
 using Infrastructure.Authentication;
-using Infrastructure.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using SharedKernel;
 
 namespace Web.API;
 

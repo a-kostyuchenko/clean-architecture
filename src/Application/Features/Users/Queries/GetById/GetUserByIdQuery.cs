@@ -1,5 +1,4 @@
 using Application.Abstractions.Caching;
-using Application.Abstractions.Messaging;
 
 namespace Application.Features.Users.Queries.GetById;
 

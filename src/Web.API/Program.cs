@@ -1,6 +1,6 @@
+using System.Reflection;
 using System.Threading.RateLimiting;
 using Application;
-using Carter;
 using Infrastructure;
 using Persistence;
 using Serilog;
@@ -21,6 +21,8 @@ builder.Services
     .AddInfrastructure()
     .AddPersistence(builder.Configuration)
     .AddAuthenticationAndAuthorization();
+
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -60,7 +62,7 @@ app.UseAuthorization();
 
 app.UseExceptionHandler(opt => { });
 
-app.MapCarter();
+app.MapEndpoints();
 
 app.Run();
 
