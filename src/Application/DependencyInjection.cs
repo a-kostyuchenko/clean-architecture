@@ -12,11 +12,10 @@ public static class DependencyInjection
         {
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
 
-            config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
-            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            config.AddOpenBehavior(typeof(TransactionBehavior<,>));
             config.AddOpenBehavior(typeof(IdempotentBehavior<,>));
+            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
 
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);

@@ -1,6 +1,7 @@
+using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Infrastructure.Authentication;
+namespace Infrastructure.Authorization;
 
 public class PermissionAuthorizationHandler 
     : AuthorizationHandler<PermissionRequirement>
@@ -16,12 +17,11 @@ public class PermissionAuthorizationHandler
             .Select(x => x.Value)
             .ToHashSet();
 
-        if (permissions.Contains(requirement.Permission))
+        if (permissions.Any(p => p == requirement.Permission || p == AdministratorPermission.AccessEverything))
         {
             context.Succeed(requirement);
         }
         
-        context.Fail();
         return Task.CompletedTask;
     }
 }

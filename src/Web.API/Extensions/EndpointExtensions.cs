@@ -1,7 +1,7 @@
 using System.Reflection;
-using Domain;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Web.API.Endpoints;
+using Permission = SharedKernel.Permission;
 
 namespace Web.API.Extensions;
 

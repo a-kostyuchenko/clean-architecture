@@ -3,7 +3,7 @@ using Application.Abstractions.Caching;
 using Application.Abstractions.Cryptography;
 using Domain.Users;
 using FluentValidation;
-using Infrastructure.Authentication;
+using Infrastructure.Authorization;
 using Infrastructure.Caching;
 using Infrastructure.Common;
 using Infrastructure.Cryptography;

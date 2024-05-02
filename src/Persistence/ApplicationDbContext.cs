@@ -3,6 +3,7 @@ using Domain.Roles;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
+using Permission = Domain.Roles.Permission;
 
 namespace Persistence;
 

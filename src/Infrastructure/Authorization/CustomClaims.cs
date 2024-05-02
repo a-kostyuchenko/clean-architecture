@@ -1,4 +1,4 @@
-namespace Infrastructure.Authentication;
+namespace Infrastructure.Authorization;
 
 internal static class CustomClaims
 {

@@ -2,7 +2,7 @@ using Application.Abstractions.Data;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Authentication;
+namespace Infrastructure.Authorization;
 
 public class PermissionService(IApplicationDbContext context) : IPermissionService
 {
@@ -18,7 +18,7 @@ public class PermissionService(IApplicationDbContext context) : IPermissionServi
         return roles
             .SelectMany(x => x)
             .SelectMany(x => x.Permissions)
-            .Select(x => x.Name)
+            .Select(x => x.ToString())
             .ToHashSet();
     }
 }

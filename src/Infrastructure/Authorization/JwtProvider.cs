@@ -6,7 +6,7 @@ using Domain.Users;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Authentication;
+namespace Infrastructure.Authorization;
 
 internal sealed class JwtProvider(IOptions<JwtOptions> jwtOptions, IPermissionService permissionService) 
     : IJwtProvider

@@ -1,6 +1,7 @@
 using Application.Features.Users.Command.ChangePassword;
 using Application.Features.Users.Command.Create;
 using Application.Features.Users.Queries.GetById;
+using Domain.Users;
 using Mapster;
 using MediatR;
 using Web.API.Contracts;
@@ -27,7 +28,8 @@ public sealed class Users : IEndpointGroup
             var result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
-        });
+        })
+        .RequirePermission(UserPermission.Read);
 
         users.MapPost(string.Empty, async (
             CreateUserRequest request,
