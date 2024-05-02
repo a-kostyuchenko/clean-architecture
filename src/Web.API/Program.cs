@@ -20,7 +20,6 @@ builder.Services
     .AddApplication()
     .AddInfrastructure()
     .AddPersistence(builder.Configuration)
-    .AddPresentation(builder.Configuration)
     .AddAuthenticationAndAuthorization();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -46,6 +45,8 @@ if (app.Environment.IsDevelopment())
 {
     app.ApplyMigrations();
 }
+
+app.UseRequestContextLogging();
 
 app.UseSerilogRequestLogging();
 

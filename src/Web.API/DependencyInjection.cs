@@ -22,21 +22,4 @@ public static class DependencyInjection
 
         return services;
     }
-    
-    public static IServiceCollection AddPresentation(
-        this IServiceCollection services,
-        IConfiguration configuration)
-    {
-        var connection = configuration.GetConnectionString("Database");
-        
-        Ensure.NotNullOrWhiteSpace(connection);
-        
-        services.AddCarter();
-
-        services
-            .AddHealthChecks()
-            .AddNpgSql(connection!);
-            
-        return services;
-    }
 }
