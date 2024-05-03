@@ -23,7 +23,7 @@ internal sealed class ChangePasswordHandler(
         Result<Password> passwordResult = Password.Create(request.Password);
 
         if (passwordResult.IsFailure)
-            return Result.Failure(passwordResult.Error);
+            return passwordResult;
 
         User? user = await context.Users
             .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
@@ -36,7 +36,7 @@ internal sealed class ChangePasswordHandler(
         Result result = user.ChangePassword(passwordHash);
 
         if (result.IsFailure)
-            return Result.Failure(result.Error);
+            return result;
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
