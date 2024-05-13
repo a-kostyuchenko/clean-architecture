@@ -8,7 +8,7 @@ using Web.API;
 using Web.API.Extensions;
 using Web.API.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -43,7 +43,7 @@ builder.Services.AddRateLimiter(options =>
             }));
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -62,7 +62,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseExceptionHandler(opt => { });
+app.UseExceptionHandler();
 
 app.MapEndpoints();
 

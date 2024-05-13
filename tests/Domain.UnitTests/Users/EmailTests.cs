@@ -9,10 +9,10 @@ public class EmailTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void Email_Should_ReturnError_WhenValueIsInvalid(string value)
+    public void Email_Should_ReturnError_WhenValueIsInvalid(string? value)
     {
         // Act
-        Result<Email> emailResult = Email.Create(value);
+        Result<Email> emailResult = Email.Create(value!);
 
         // Assert
         emailResult.IsSuccess.Should().BeFalse();

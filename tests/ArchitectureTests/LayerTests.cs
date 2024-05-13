@@ -14,15 +14,15 @@ public class LayerTests : BaseTest
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherProjects()
     {
-        var otherProjects = new[]
-        {
+        string[] otherProjects =
+        [
             ApplicationNamespace,
             InfrastructureNamespace,
             PresentationNamespace,
             WebNamespace
-        };
+        ];
 
-        var result = Types
+        TestResult? result = Types
             .InAssembly(DomainAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
@@ -34,14 +34,14 @@ public class LayerTests : BaseTest
     [Fact]
     public void Application_Should_Not_HaveDependencyOnOtherProjects()
     {
-        var otherProjects = new[]
-        {
+        string[] otherProjects =
+        [
             InfrastructureNamespace,
             PresentationNamespace,
             WebNamespace
-        };
+        ];
 
-        var result = Types
+        TestResult? result = Types
             .InAssembly(ApplicationAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
@@ -53,7 +53,7 @@ public class LayerTests : BaseTest
     [Fact]
     public void Handlers_Should_Have_DependencyOnDomain()
     {
-        var result = Types
+        TestResult? result = Types
             .InAssembly(ApplicationAssembly)
             .That()
             .HaveNameEndingWith("Handler")
@@ -67,13 +67,13 @@ public class LayerTests : BaseTest
     [Fact]
     public void Infrastructure_Should_Not_HaveDependencyOnOtherProjects()
     {
-        var otherProjects = new[]
-        {
+        string[] otherProjects =
+        [
             PresentationNamespace,
             WebNamespace
-        };
+        ];
 
-        var result = Types
+        TestResult? result = Types
             .InAssembly(InfrastructureAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)

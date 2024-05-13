@@ -1,4 +1,5 @@
 using Application.Abstractions.Data;
+using Domain.Roles;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ public class PermissionService(IApplicationDbContext context) : IPermissionServi
 {
     public async Task<HashSet<string>> GetPermissionsAsync(Guid userId)
     {
-        var roles = await context.Set<User>()
+        List<Role>[] roles = await context.Set<User>()
             .Include(x => x.Roles)
             .ThenInclude(x => x.Permissions)
             .Where(x => x.Id == userId)

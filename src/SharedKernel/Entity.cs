@@ -2,7 +2,7 @@ namespace SharedKernel;
 
 public abstract class Entity
 {
-    private readonly List<IDomainEvent> _domainEvents = new();
+    private readonly List<IDomainEvent> _domainEvents = [];
 
     protected Entity(Guid id)
     {

@@ -10,7 +10,7 @@ internal sealed class IdempotencyService(ApplicationDbContext context) : IIdempo
 
     public async Task CreateRequestAsync(Guid requestId, string name)
     {
-        var idempotentRequest = new IdempotentRequest()
+        var idempotentRequest = new IdempotentRequest
         {
             Id = requestId,
             Name = name,

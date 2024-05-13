@@ -10,8 +10,8 @@ public class UserTests
     {
         // Arrange
         Email email = Email.Create("test@test.com").Value;
-        var firstName = FirstName.Create("Firstname").Value;
-        var lastName = LastName.Create("Lastname").Value;
+        FirstName firstName = FirstName.Create("Firstname").Value;
+        LastName lastName = LastName.Create("Lastname").Value;
 
         // Act
         var user = User.Create(firstName, lastName, email, "hash");

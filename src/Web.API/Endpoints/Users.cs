@@ -4,6 +4,7 @@ using Application.Features.Users.Queries.GetById;
 using Domain.Users;
 using Mapster;
 using MediatR;
+using SharedKernel;
 using Web.API.Contracts;
 using Web.API.Extensions;
 using Web.API.Infrastructure;
@@ -14,7 +15,7 @@ public sealed class Users : IEndpointGroup
 {
     public void MapGroup(IEndpointRouteBuilder app)
     {
-        var users = app
+        RouteGroupBuilder users = app
             .MapGroup(ApiRoutes.Users.BaseUri)
             .WithTags(ApiRoutes.Users.Tag);
 
@@ -25,7 +26,7 @@ public sealed class Users : IEndpointGroup
         {
             var query = new GetUserByIdQuery(userId);
             
-            var result = await sender.Send(query, cancellationToken);
+            Result<UserResponse> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
@@ -35,9 +36,9 @@ public sealed class Users : IEndpointGroup
             CreateUserRequest request,
             ISender sender) =>
         {
-            var command = request.Adapt<CreateUserCommand>();
+            CreateUserCommand command = request.Adapt<CreateUserCommand>();
             
-            var result = await sender.Send(command);
+            Result<Guid> result = await sender.Send(command);
             
             return result.Match(Results.Created, CustomResults.Problem);
         });
@@ -49,7 +50,7 @@ public sealed class Users : IEndpointGroup
         {
             var command = new ChangePasswordCommand(userId, request.Password);
 
-            var result = await sender.Send(command);
+            Result result = await sender.Send(command);
             
             return result.Match(Results.NoContent, CustomResults.Problem);
         });

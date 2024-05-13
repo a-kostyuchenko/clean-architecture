@@ -1,5 +1,6 @@
 using Application.Features.Authentication.Commands.Login;
 using MediatR;
+using SharedKernel;
 using Web.API.Contracts;
 using Web.API.Extensions;
 using Web.API.Infrastructure;
@@ -10,7 +11,7 @@ public sealed class Authentication : IEndpointGroup
 {
     public void MapGroup(IEndpointRouteBuilder app)
     {
-        var authentication = app
+        RouteGroupBuilder authentication = app
             .MapGroup(ApiRoutes.Authentication.BaseUri)
             .WithTags(ApiRoutes.Authentication.Tag);
 
@@ -20,7 +21,7 @@ public sealed class Authentication : IEndpointGroup
         {
             var command = new LoginCommand(request.Email, request.Password);
 
-            var result = await sender.Send(command);
+            Result<LoginResponse> result = await sender.Send(command);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         });
