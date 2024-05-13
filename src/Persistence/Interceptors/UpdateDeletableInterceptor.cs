@@ -27,8 +27,10 @@ internal sealed class UpdateDeletableInterceptor : SaveChangesInterceptor
 
         foreach (EntityEntry<IDeletable> entry in entities)
         {
-            if (entry.State != EntityState.Deleted) 
+            if (entry.State != EntityState.Deleted)
+            {
                 continue;
+            }
 
             entry.Property(nameof(IDeletable.DeletedOnUtc)).CurrentValue = utcNow;
 

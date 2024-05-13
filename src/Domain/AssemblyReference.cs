@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Domain;
 
-public class AssemblyReference
+public sealed class AssemblyReference
 {
     public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
 }

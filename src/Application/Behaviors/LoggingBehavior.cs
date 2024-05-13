@@ -22,7 +22,7 @@ internal sealed class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavi
             requestName,
             DateTime.UtcNow);
 
-        var result = await next();
+        TResponse result = await next();
 
         if (result.IsSuccess)
         {

@@ -10,11 +10,6 @@ public static class EndpointExtensions
     public static TBuilder RequirePermission<TBuilder>(this TBuilder builder, Permission permission) 
         where TBuilder : IEndpointConventionBuilder
     {
-        if (builder == null)
-        {
-            throw new ArgumentNullException(nameof(builder));
-        }
-
         ArgumentNullException.ThrowIfNull(permission);
 
         return builder.RequireAuthorization(permission.ToString());
@@ -28,7 +23,7 @@ public static class EndpointExtensions
                            type.IsAssignableTo(typeof(IEndpointGroup)))
             .Select(type => ServiceDescriptor.Transient(typeof(IEndpointGroup), type))
             .ToArray();
-        
+    
         services.TryAddEnumerable(endpointDescriptors);
 
         return services;
@@ -38,11 +33,11 @@ public static class EndpointExtensions
         this WebApplication app,
         RouteGroupBuilder? routeGroupBuilder = null)
     {
-        var endpointGroups = app.Services.GetRequiredService<IEnumerable<IEndpointGroup>>();
+        IEnumerable<IEndpointGroup> endpointGroups = app.Services.GetRequiredService<IEnumerable<IEndpointGroup>>();
 
         IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
 
-        foreach (var endpointGroup in endpointGroups)
+        foreach (IEndpointGroup endpointGroup in endpointGroups)
         {
             endpointGroup.MapGroup(builder);
         }

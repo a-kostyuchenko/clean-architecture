@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Web.API;
 
-public class AssemblyReference
+public sealed class AssemblyReference
 {
     internal static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
 }

@@ -1,31 +1,36 @@
 using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SharedKernel;
 
 namespace Infrastructure.Configuration;
 
-public class FluentValidateOptions<TOptions>(IServiceProvider serviceProvider, string? name)
+public class FluentValidateOptions<TOptions>(IServiceProvider serviceProvider, string? optionsName)
     : IValidateOptions<TOptions>
     where TOptions : class
 {
-    public ValidateOptionsResult Validate(string? name1, TOptions options)
+    public ValidateOptionsResult Validate(string? name, TOptions options)
     {
-        if (!string.IsNullOrWhiteSpace(name) && name != name1)
+        if (!string.IsNullOrWhiteSpace(optionsName) && optionsName != name)
+        {
             return ValidateOptionsResult.Skip;
-        
+        }
+
         Ensure.NotNull(options);
 
-        using var scope = serviceProvider.CreateScope();
+        using IServiceScope scope = serviceProvider.CreateScope();
 
-        var validator = scope.ServiceProvider.GetRequiredService<IValidator<TOptions>>();
+        IValidator<TOptions> validator = scope.ServiceProvider.GetRequiredService<IValidator<TOptions>>();
 
-        var result = validator.Validate(options);
+        ValidationResult? result = validator.Validate(options);
 
         if (result.IsValid)
+        {
             return ValidateOptionsResult.Success;
+        }
 
-        var type = options.GetType().Name;
+        string type = options.GetType().Name;
         var errors = result.Errors.Select(failure =>
             $"Validation failed for {type}.{failure.PropertyName} with the error {failure.ErrorMessage}").ToList();
 

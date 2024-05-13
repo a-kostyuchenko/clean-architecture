@@ -27,7 +27,7 @@ public interface IApplicationDbContext
         where TEntity : Entity;
     void Remove<TEntity>(TEntity entity) 
         where TEntity : Entity;
-    void RemoveRange<TEntity>(IEnumerable<TEntity> entity)
+    void RemoveRange<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : Entity;
 
     #endregion

@@ -1,5 +1,6 @@
 using Domain.Users;
 using FluentAssertions;
+using SharedKernel;
 
 namespace Domain.UnitTests.Users;
 
@@ -8,10 +9,10 @@ public class EmailTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void Email_Should_ReturnError_WhenValueIsInvalid(string? value)
+    public void Email_Should_ReturnError_WhenValueIsInvalid(string value)
     {
         // Act
-        var emailResult = Email.Create(value);
+        Result<Email> emailResult = Email.Create(value);
 
         // Assert
         emailResult.IsSuccess.Should().BeFalse();
@@ -25,7 +26,7 @@ public class EmailTests
     public void Email_Should_ReturnError_WhenValueIsNotMatchingPattern(string value)
     {
         // Act
-        var emailResult = Email.Create(value);
+        Result<Email> emailResult = Email.Create(value);
 
         // Assert
         emailResult.IsSuccess.Should().BeFalse();

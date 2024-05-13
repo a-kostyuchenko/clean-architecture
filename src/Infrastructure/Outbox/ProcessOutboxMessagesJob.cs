@@ -25,7 +25,7 @@ public class ProcessOutboxMessagesJob(
 
     public async Task Execute(IJobExecutionContext context)
     {
-        var messages = await dbContext
+        List<OutboxMessage> messages = await dbContext
             .Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null &&
                         m.Error == null)
@@ -40,7 +40,9 @@ public class ProcessOutboxMessagesJob(
                     JsonSerializerSettings);
 
             if (domainEvent is null)
+            {
                 continue;
+            }
 
             AsyncRetryPolicy policy = Policy
                 .Handle<Exception>()

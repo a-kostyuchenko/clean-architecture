@@ -16,7 +16,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var connection = configuration.GetConnectionString("Database");
+        string? connection = configuration.GetConnectionString("Database");
         
         Ensure.NotNullOrWhiteSpace(connection);
 

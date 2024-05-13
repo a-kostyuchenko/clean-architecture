@@ -13,11 +13,13 @@ internal sealed class IdempotentBehavior<TRequest, TResponse>(IIdempotencyServic
         CancellationToken cancellationToken)
     {
         if (await idempotencyService.RequestExistsAsync(request.RequestId))
+        {
             return default!;
+        }
 
         await idempotencyService.CreateRequestAsync(request.RequestId, typeof(TRequest).Name);
 
-        var response = await next();
+        TResponse response = await next();
 
         return response;
     }

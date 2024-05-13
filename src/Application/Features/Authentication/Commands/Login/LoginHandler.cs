@@ -19,19 +19,25 @@ internal sealed class LoginHandler(
         Result<Email> emailResult = Email.Create(request.Email);
 
         if (emailResult.IsFailure)
+        {
             return Result.Failure<LoginResponse>(AuthenticationErrors.InvalidEmail);
+        }
 
-        var user = await context.Users.FirstOrDefaultAsync(
+        User? user = await context.Users.FirstOrDefaultAsync(
             u => u.Email == emailResult.Value,
             cancellationToken);
 
         if (user is null)
+        {
             return Result.Failure<LoginResponse>(AuthenticationErrors.UserNotFound);
+        }
 
         bool passwordValid = user.VerifyPasswordHash(request.Password, passwordHashChecker);
 
         if (!passwordValid)
+        {
             return Result.Failure<LoginResponse>(AuthenticationErrors.InvalidPassword);
+        }
 
         string token = await jwtProvider.GenerateAsync(user);
 

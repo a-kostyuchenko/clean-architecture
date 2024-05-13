@@ -31,7 +31,9 @@ public class PasswordHasher : IPasswordHasher, IPasswordHashChecker, IDisposable
         byte[] decodedHashedPassword = Convert.FromBase64String(passwordHash);
 
         if (decodedHashedPassword.Length == 0)
+        {
             return false;
+        }
 
         return VerifyPasswordHash(decodedHashedPassword, providedPassword);
     }
@@ -59,7 +61,7 @@ public class PasswordHasher : IPasswordHasher, IPasswordHashChecker, IDisposable
 
     private byte[] GetRandomSalt()
     {
-        var salt = new byte[SaltSize];
+        byte[] salt = new byte[SaltSize];
         
         _rng.GetBytes(salt);
 
@@ -70,16 +72,18 @@ public class PasswordHasher : IPasswordHasher, IPasswordHashChecker, IDisposable
     {
         try
         {
-            var salt = new byte[SaltSize];
+            byte[] salt = new byte[SaltSize];
             
             Buffer.BlockCopy(hashedPassword, 0, salt, 0, salt.Length);
 
             int subKeyLength = hashedPassword.Length - salt.Length;
 
             if (subKeyLength < SaltSize)
+            {
                 return false;
+            }
 
-            var expectedSubKey = new byte[subKeyLength];
+            byte[] expectedSubKey = new byte[subKeyLength];
 
             Buffer.BlockCopy(hashedPassword, salt.Length, expectedSubKey, 0, expectedSubKey.Length);
 
@@ -96,15 +100,21 @@ public class PasswordHasher : IPasswordHasher, IPasswordHashChecker, IDisposable
     private static bool ByteArraysEqual(byte[]? a, byte[]? b)
     {
         if (a == null && b == null)
+        {
             return true;
+        }
 
         if (a == null || b == null || a.Length != b.Length)
+        {
             return false;
+        }
 
         bool areSame = true;
 
-        for (int i = 0; i < a.Length; i++) 
+        for (int i = 0; i < a.Length; i++)
+        {
             areSame &= a[i] == b[i];
+        }
 
         return areSame;
     }

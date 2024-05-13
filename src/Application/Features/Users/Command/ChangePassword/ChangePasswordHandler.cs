@@ -18,25 +18,33 @@ internal sealed class ChangePasswordHandler(
     public async Task<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
         if (request.UserId != userContext.UserId)
+        {
             return Result.Failure(UserErrors.InvalidPermissions);
+        }
 
         Result<Password> passwordResult = Password.Create(request.Password);
 
         if (passwordResult.IsFailure)
+        {
             return passwordResult;
+        }
 
         User? user = await context.Users
             .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
         
         if (user is null)
+        {
             return Result.Failure(UserErrors.NotFound);
+        }
 
         string passwordHash = passwordHasher.HashPassword(passwordResult.Value);
 
         Result result = user.ChangePassword(passwordHash);
 
         if (result.IsFailure)
+        {
             return result;
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

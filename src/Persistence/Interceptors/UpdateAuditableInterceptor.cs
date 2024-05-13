@@ -28,12 +28,16 @@ internal sealed class UpdateAuditableInterceptor : SaveChangesInterceptor
         foreach (EntityEntry<IAuditable> entry in entities)
         {
             if (entry.State == EntityState.Added)
+            {
                 SetCurrentPropertyValue(
                     entry, nameof(IAuditable.CreatedOnUtc), utcNow);
+            }
 
             if (entry.State == EntityState.Modified)
+            {
                 SetCurrentPropertyValue(
                     entry, nameof(IAuditable.ModifiedOnUtc), utcNow);
+            }
         }
 
         static void SetCurrentPropertyValue(

@@ -14,7 +14,7 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
         
         builder.HasKey(x => x.Id);
 
-        var permissions = Domain.AssemblyReference.Assembly
+        IEnumerable<Permission> permissions = Domain.AssemblyReference.Assembly
             .DefinedTypes
             .Where(type => type is { IsAbstract: false, IsClass: true } &&
                            type.IsSubclassOf(typeof(SharedKernel.Permission)))

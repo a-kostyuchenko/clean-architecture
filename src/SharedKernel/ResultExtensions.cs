@@ -8,7 +8,9 @@ public static class ResultExtensions
         Error error)
     {
         if (result.IsFailure)
+        {
             return result;
+        }
 
         return predicate(result.Value)
             ? result

@@ -44,7 +44,9 @@ public class User : Entity, IAuditable, IDeletable
     public Result ChangePassword(string passwordHash)
     {
         if (passwordHash == _passwordHash)
+        {
             return Result.Failure(UserErrors.CannotChangePassword);
+        }
 
         _passwordHash = passwordHash;
         

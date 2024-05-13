@@ -14,23 +14,27 @@ internal sealed class CreateUserHandler(
 {
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var firstNameResult = FirstName.Create(request.FirstName);
-        var lastNameResult = LastName.Create(request.LastName);
-        var emailResult = Email.Create(request.Email);
-        var passwordResult = Password.Create(request.Password);
+        Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
+        Result<LastName> lastNameResult = LastName.Create(request.LastName);
+        Result<Email> emailResult = Email.Create(request.Email);
+        Result<Password> passwordResult = Password.Create(request.Password);
 
-        Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(
+        var firstFailureOrSuccess = Result.FirstFailureOrSuccess(
             firstNameResult,
             lastNameResult,
             emailResult,
             passwordResult);
 
         if (firstFailureOrSuccess.IsFailure)
+        {
             return Result.Failure<Guid>(firstFailureOrSuccess.Error);
+        }
 
         if (await context.Users.AnyAsync(x => x.Email == emailResult.Value, cancellationToken))
+        {
             return Result.Failure<Guid>(UserErrors.EmailAlreadyInUse);
-        
+        }
+
         string passwordHash = passwordHasher.HashPassword(passwordResult.Value);
 
         var user = User.Create(firstNameResult.Value, lastNameResult.Value, emailResult.Value, passwordHash);

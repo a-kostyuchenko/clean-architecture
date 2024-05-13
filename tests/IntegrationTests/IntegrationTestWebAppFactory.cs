@@ -21,17 +21,16 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>
     {
         builder.ConfigureTestServices(services =>
         {
-            var descriptor = services
+            ServiceDescriptor? descriptor = services
                 .SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
 
-            if (descriptor is not null) 
-                services.Remove(descriptor);
-
-            services.AddDbContext<ApplicationDbContext>(options =>
+            if (descriptor is not null)
             {
-                options
-                    .UseNpgsql(_dbContainer.GetConnectionString());
-            });
+                services.Remove(descriptor);
+            }
+
+            services.AddDbContext<ApplicationDbContext>(options => 
+                options.UseNpgsql(_dbContainer.GetConnectionString()));
         });
     }
 
