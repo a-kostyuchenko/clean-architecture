@@ -15,15 +15,15 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.ComplexProperty(
             u => u.Email,
-            b => b.Property(e => e.Value).HasColumnName(nameof(User.Email)).HasMaxLength(Email.MaxLength));
+            b => b.Property(e => e.Value).HasMaxLength(Email.MaxLength));
         
         builder.ComplexProperty(
             u => u.FirstName,
-            b => b.Property(e => e.Value).HasColumnName(nameof(User.FirstName)).HasMaxLength(FirstName.MaxLength));
+            b => b.Property(e => e.Value).HasMaxLength(FirstName.MaxLength));
         
         builder.ComplexProperty(
             u => u.LastName,
-            b => b.Property(e => e.Value).HasColumnName(nameof(User.LastName)).HasMaxLength(LastName.MaxLength));
+            b => b.Property(e => e.Value).HasMaxLength(LastName.MaxLength));
         
         builder.Property<string>("_passwordHash")
             .HasField("_passwordHash")
@@ -37,7 +37,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .HasMany(x => x.Roles)
             .WithMany(x => x.Users)
-            .UsingEntity<UserRole>();
+            .UsingEntity(joinBuilder =>
+            {
+                joinBuilder.ToTable("user_roles");
+            });
 
         builder.HasQueryFilter(user => !user.Deleted);
     }

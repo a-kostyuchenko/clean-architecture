@@ -16,7 +16,10 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder
             .HasMany(x => x.Permissions)
             .WithMany()
-            .UsingEntity<RolePermission>();
+            .UsingEntity(joinBuilder =>
+            {
+                joinBuilder.ToTable("role_permissions");
+            });
 
         builder
             .HasMany(x => x.Users)
