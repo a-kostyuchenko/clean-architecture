@@ -6,5 +6,4 @@ public class OutboxOptions
     
     public int BatchSize { get; init; }
     public string Schedule { get; init; }
-    public int RetriesCount { get; init; }
 }
