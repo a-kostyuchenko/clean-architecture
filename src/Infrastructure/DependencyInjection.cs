@@ -14,7 +14,6 @@ using Infrastructure.Outbox;
 using Infrastructure.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Quartz;
 using SharedKernel;
 
 namespace Infrastructure;
@@ -45,7 +44,11 @@ public static class DependencyInjection
         
         services.ConfigureOptions<JsonOptionsSetup>();
         
-        services.AddDistributedMemoryCache();
+        string redisConnectionString = configuration.GetConnectionString("Cache")!;
+
+        services.AddStackExchangeRedisCache(options =>
+            options.Configuration = redisConnectionString);
+        
         services.AddSingleton<ICacheService, CacheService>();
         
         services.AddHangfire(config =>

@@ -19,3 +19,10 @@
     ports:
       - 5341:5341
       - 8081:80
+        
+  clean-architecture.redis:
+    image: redis:latest
+    container_name: clean-architecture-redis
+    restart: always
+    ports:
+      - '6379:6379'

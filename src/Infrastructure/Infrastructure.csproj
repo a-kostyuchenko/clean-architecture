@@ -12,9 +12,7 @@
         <PackageReference Include="MailKit" Version="4.5.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
         <PackageReference Include="Polly" Version="8.4.0" />
-        <PackageReference Include="Quartz" Version="3.9.0" />
-        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.9.0" />
-        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.9.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.2" />
         <PackageReference Update="SonarAnalyzer.CSharp" Version="9.25.0.90414">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
