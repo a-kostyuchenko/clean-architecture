@@ -8,7 +8,7 @@ namespace Persistence.Interceptors;
 
 internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
 {
-    private static readonly JsonSerializerSettings Serializer = new()
+    private static readonly JsonSerializerSettings SerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All
     };
@@ -28,6 +28,8 @@ internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
 
     private static void InsertOutboxMessages(DbContext context)
     {
+        DateTime utcNow = DateTime.UtcNow;
+        
         var outboxMessages = context
             .ChangeTracker
             .Entries<Entity>()
@@ -40,13 +42,11 @@ internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
 
                 return domainEvents;
             })
-            .Select(domainEvent => new OutboxMessage
-            {
-                Id = Guid.NewGuid(),
-                OccurredOnUtc = DateTime.UtcNow,
-                Type = domainEvent.GetType().Name,
-                Content = JsonConvert.SerializeObject(domainEvent, Serializer)
-            })
+            .Select(domainEvent => new OutboxMessage(
+                Guid.NewGuid(),
+                domainEvent.GetType().Name,
+                JsonConvert.SerializeObject(domainEvent, SerializerSettings),
+                utcNow))
             .ToList();
 
         context.Set<OutboxMessage>().AddRange(outboxMessages);

@@ -6,7 +6,7 @@ internal sealed class OutboxOptionsValidator : AbstractValidator<OutboxOptions>
 {
     public OutboxOptionsValidator()
     {
-        RuleFor(x => x.IntervalInSeconds).InclusiveBetween(10, 60);
+        RuleFor(x => x.Schedule).NotEmpty();
         
         RuleFor(x => x.RetriesCount).InclusiveBetween(1, 10);
         

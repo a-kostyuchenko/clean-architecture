@@ -3,12 +3,16 @@ using Application.Abstractions.Caching;
 using Application.Abstractions.Cryptography;
 using Domain.Users;
 using FluentValidation;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Infrastructure.Authorization;
 using Infrastructure.Caching;
-using Infrastructure.Common;
+using Infrastructure.Clock;
 using Infrastructure.Cryptography;
 using Infrastructure.Extensions;
 using Infrastructure.Outbox;
+using Infrastructure.Serialization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using SharedKernel;
@@ -17,7 +21,9 @@ namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddScoped<ISystemTimeProvider, SystemTimeProvider>();
 
@@ -28,9 +34,7 @@ public static class DependencyInjection
         services.AddTransient<IPasswordHasher, PasswordHasher>();
         
         services.AddTransient<IPasswordHashChecker, PasswordHasher>();
-
-        services.ConfigureOptions<OutboxBackgroundJobSetup>();
-
+        
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
 
         services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSection);
@@ -44,12 +48,13 @@ public static class DependencyInjection
         services.AddDistributedMemoryCache();
         services.AddSingleton<ICacheService, CacheService>();
         
-        services.AddQuartz();
-        
-        services.AddQuartzHostedService(options =>
-        {
-            options.WaitForJobsToComplete = true;
-        });
+        services.AddHangfire(config =>
+            config.UsePostgreSqlStorage(
+                options => options.UseNpgsqlConnection(configuration.GetConnectionString("Database"))));
+
+        services.AddHangfireServer(options => options.SchedulePollingInterval = TimeSpan.FromSeconds(1));
+
+        services.AddScoped<IProcessOutboxMessagesJob, ProcessOutboxMessagesJob>();
         
         return services;
     }

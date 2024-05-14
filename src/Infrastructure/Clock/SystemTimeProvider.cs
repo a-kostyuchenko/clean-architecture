@@ -1,6 +1,6 @@
 using SharedKernel;
 
-namespace Infrastructure.Common;
+namespace Infrastructure.Clock;
 
 public class SystemTimeProvider : ISystemTimeProvider
 {

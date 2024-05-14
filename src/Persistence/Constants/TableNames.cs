@@ -2,9 +2,9 @@ namespace Persistence.Constants;
 
 public static class TableNames
 {
-    internal const string OutboxMessages = nameof(OutboxMessages);
-    internal const string IdempotentRequests = nameof(IdempotentRequests);
-    internal const string Users = nameof(Users);
-    internal const string Roles = nameof(Roles);
-    internal const string Permissions = nameof(Permissions);
+    internal const string OutboxMessages = "outbox_messages";
+    internal const string IdempotentRequests = "idempotent_requests";
+    internal const string Users = "users";
+    internal const string Roles = "roles";
+    internal const string Permissions = "permissions";
 }

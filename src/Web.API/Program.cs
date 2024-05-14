@@ -18,7 +18,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services
     .AddHttpContextAccessor()
     .AddApplication()
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddAuthenticationAndAuthorization();
 
@@ -55,8 +55,6 @@ app.UseRequestContextLogging();
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
-
-app.UseRateLimiter();
 
 app.UseAuthentication();
 

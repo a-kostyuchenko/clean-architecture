@@ -26,7 +26,7 @@ public static class DependencyInjection
         
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            options.UseNpgsql(connection);
+            options.UseNpgsql(connection).UseSnakeCaseNamingConvention();
 
             options.AddInterceptors(
                 sp.GetRequiredService<UpdateDeletableInterceptor>(),
@@ -34,7 +34,7 @@ public static class DependencyInjection
                 sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
         });
 
-        services.AddSingleton(_ =>
+        services.AddSingleton<IDbConnectionFactory>(_ =>
             new DbConnectionFactory(new NpgsqlDataSourceBuilder(connection).Build()));
         
         services.AddScoped<IApplicationDbContext>(sp =>
