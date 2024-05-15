@@ -1,4 +1,4 @@
-using System.Data;
+using System.Data.Common;
 using Application.Abstractions.Data;
 using Npgsql;
 
@@ -6,10 +6,8 @@ namespace Persistence;
 
 public class DbConnectionFactory(NpgsqlDataSource dataSource) : IDbConnectionFactory
 {
-    public IDbConnection CreateOpenConnection()
+    public async ValueTask<DbConnection> OpenConnectionAsync()
     {
-        NpgsqlConnection connection = dataSource.OpenConnection();
-
-        return connection;
+        return await dataSource.OpenConnectionAsync();
     }
 }

@@ -3,6 +3,7 @@ using Application.Abstractions.Idempotency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
 using Persistence.Idempotency;
 using Persistence.Interceptors;
@@ -34,8 +35,10 @@ public static class DependencyInjection
                 sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
         });
 
-        services.AddSingleton<IDbConnectionFactory>(_ =>
-            new DbConnectionFactory(new NpgsqlDataSourceBuilder(connection).Build()));
+        NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(connection).Build();
+        services.TryAddSingleton(npgsqlDataSource);
+
+        services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
         
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<ApplicationDbContext>());

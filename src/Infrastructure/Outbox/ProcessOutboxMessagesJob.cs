@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Application.Abstractions.Data;
 using Dapper;
 using MediatR;
@@ -26,8 +27,8 @@ internal sealed class ProcessOutboxMessagesJob(
     {
         logger.LogInformation("Beginning to process outbox messages");
 
-        using IDbConnection connection = dbConnectionFactory.CreateOpenConnection();
-        using IDbTransaction transaction = connection.BeginTransaction();
+        await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
+        await using DbTransaction transaction = await connection.BeginTransactionAsync();
 
         IReadOnlyList<OutboxMessageResponse> outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
 
@@ -62,7 +63,7 @@ internal sealed class ProcessOutboxMessagesJob(
             await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);
         }
 
-        transaction.Commit();
+        await transaction.CommitAsync();
 
         logger.LogInformation("Completed processing outbox messages");
     }

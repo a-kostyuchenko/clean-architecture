@@ -24,7 +24,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<ISystemTimeProvider, SystemTimeProvider>();
+        services.AddSingleton<ISystemTimeProvider, SystemTimeProvider>();
 
         services.AddScoped<IJwtProvider, JwtProvider>();
         
