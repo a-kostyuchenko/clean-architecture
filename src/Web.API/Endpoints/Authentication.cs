@@ -1,6 +1,7 @@
 using Application.Features.Authentication.Commands.Login;
 using MediatR;
 using SharedKernel;
+using SharedKernel.Result;
 using Web.API.Contracts;
 using Web.API.Extensions;
 using Web.API.Infrastructure;

@@ -1,8 +1,10 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
+using Domain.Users.Errors;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
+using SharedKernel.Result;
 
 namespace Application.Features.Users.Queries.GetById;
 

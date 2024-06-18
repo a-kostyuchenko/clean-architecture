@@ -1,6 +1,7 @@
-using SharedKernel;
+using Domain.Users.Errors;
+using SharedKernel.Result;
 
-namespace Domain.Users;
+namespace Domain.Users.ValueObjects;
 
 public record LastName
 {

@@ -1,7 +1,7 @@
 namespace SharedKernel;
 
-public abstract class Permission(int id, string name, string description) 
-    : Enumeration<Permission>(id, name)
+public abstract class ApplicationPermission(int id, string name, string description) 
+    : Enumeration<ApplicationPermission>(id, name)
 {
     public string Description { get; private init; } = description;
 
@@ -12,6 +12,6 @@ public abstract class Permission(int id, string name, string description)
         return $"{Key}_{Name}";
     }
 
-    public static implicit operator string(Permission permission) => 
+    public static implicit operator string(ApplicationPermission permission) => 
         $"{permission.Key}_{permission.Name}";
 }

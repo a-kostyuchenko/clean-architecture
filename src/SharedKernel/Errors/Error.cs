@@ -1,4 +1,4 @@
-namespace SharedKernel;
+namespace SharedKernel.Errors;
 
 public record Error(string Code, string Description, ErrorType Type)
 {

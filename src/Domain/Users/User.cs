@@ -1,5 +1,8 @@
 using Domain.Roles;
+using Domain.Users.Errors;
+using Domain.Users.ValueObjects;
 using SharedKernel;
+using SharedKernel.Result;
 
 namespace Domain.Users;
 

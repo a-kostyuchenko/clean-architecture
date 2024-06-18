@@ -1,13 +1,13 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SharedKernel;
 using Web.API.Endpoints;
-using Permission = SharedKernel.Permission;
 
 namespace Web.API.Extensions;
 
 public static class EndpointExtensions
 {
-    public static TBuilder RequirePermission<TBuilder>(this TBuilder builder, Permission permission) 
+    public static TBuilder RequirePermission<TBuilder>(this TBuilder builder, ApplicationPermission permission) 
         where TBuilder : IEndpointConventionBuilder
     {
         ArgumentNullException.ThrowIfNull(permission);

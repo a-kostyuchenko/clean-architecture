@@ -17,11 +17,11 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
         IEnumerable<Permission> permissions = Domain.AssemblyReference.Assembly
             .DefinedTypes
             .Where(type => type is { IsAbstract: false, IsClass: true } &&
-                           type.IsSubclassOf(typeof(SharedKernel.Permission)))
+                           type.IsSubclassOf(typeof(SharedKernel.ApplicationPermission)))
             .SelectMany(type => type
                 .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                .Where(fieldInfo => typeof(SharedKernel.Permission).IsAssignableFrom(fieldInfo.FieldType))
-                    .Select(fieldInfo => (SharedKernel.Permission)fieldInfo.GetValue(default)!)
+                .Where(fieldInfo => typeof(SharedKernel.ApplicationPermission).IsAssignableFrom(fieldInfo.FieldType))
+                    .Select(fieldInfo => (SharedKernel.ApplicationPermission)fieldInfo.GetValue(default)!)
         .Select(permission => Permission.Create(
             permission.Key,
             permission.Name,

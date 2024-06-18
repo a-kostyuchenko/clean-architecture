@@ -60,4 +60,7 @@ app.MapEndpoints();
 
 app.Run();
 
-public partial class Program;
+namespace Web.API
+{
+    public partial class Program;
+}

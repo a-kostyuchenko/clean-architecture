@@ -2,8 +2,11 @@ using Application.Abstractions.Cryptography;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
+using Domain.Users.Errors;
+using Domain.Users.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
+using SharedKernel.Result;
 
 namespace Application.Features.Users.Command.Create;
 

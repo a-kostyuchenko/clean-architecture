@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using Application.Abstractions.Cryptography;
 using Domain.Users;
+using Domain.Users.ValueObjects;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Infrastructure.Cryptography;

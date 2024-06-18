@@ -1,12 +1,12 @@
 using SharedKernel;
 
-namespace Domain.Users;
+namespace Domain.Users.Permissions;
 
 public sealed class AdministratorPermission(int id, string name, string description) 
-    : Permission(id, name, description)
+    : ApplicationPermission(id, name, description)
 {
     public override string Key => "Administrator";
 
-    public static readonly Permission AccessEverything = 
+    public static readonly ApplicationPermission AccessEverything = 
         new AdministratorPermission(int.MaxValue, nameof(AccessEverything), "Can access everything");
 }

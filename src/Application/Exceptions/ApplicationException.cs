@@ -1,4 +1,5 @@
 using SharedKernel;
+using SharedKernel.Errors;
 
 namespace Application.Exceptions;
 

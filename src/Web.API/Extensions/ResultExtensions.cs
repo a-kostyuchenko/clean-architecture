@@ -1,4 +1,5 @@
 using SharedKernel;
+using SharedKernel.Result;
 
 namespace Web.API.Extensions;
 

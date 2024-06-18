@@ -1,6 +1,6 @@
-using SharedKernel;
+using SharedKernel.Errors;
 
-namespace Domain.Users;
+namespace Domain.Users.Errors;
 
 public static class UserErrors
 {

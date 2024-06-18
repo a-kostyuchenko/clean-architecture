@@ -1,6 +1,9 @@
 using Domain.Users;
+using Domain.Users.Errors;
+using Domain.Users.ValueObjects;
 using FluentAssertions;
 using SharedKernel;
+using SharedKernel.Result;
 
 namespace Domain.UnitTests.Users;
 

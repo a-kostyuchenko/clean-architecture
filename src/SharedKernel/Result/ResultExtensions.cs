@@ -1,4 +1,6 @@
-namespace SharedKernel;
+using SharedKernel.Errors;
+
+namespace SharedKernel.Result;
 
 public static class ResultExtensions
 {
