@@ -20,8 +20,6 @@ builder.Services
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
-builder.Services.AddHealthChecks();
-
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
@@ -62,7 +60,4 @@ app.MapEndpoints();
 
 app.Run();
 
-namespace Web.API
-{
-    public partial class Program;
-}
+public partial class Program;
