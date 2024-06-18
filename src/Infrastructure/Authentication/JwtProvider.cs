@@ -3,10 +3,11 @@ using System.Security.Claims;
 using System.Text;
 using Application.Abstractions;
 using Domain.Users;
+using Infrastructure.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Authorization;
+namespace Infrastructure.Authentication;
 
 internal sealed class JwtProvider(IOptions<JwtOptions> jwtOptions, IPermissionService permissionService) 
     : IJwtProvider

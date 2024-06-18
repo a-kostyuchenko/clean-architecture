@@ -11,7 +11,6 @@ namespace Application.Features.Users.Command.ChangePassword;
 internal sealed class ChangePasswordHandler(
         IApplicationDbContext context,
         IUserContext userContext,
-        IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher)
     : ICommandHandler<ChangePasswordCommand>
 {
@@ -46,7 +45,7 @@ internal sealed class ChangePasswordHandler(
             return result;
         }
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

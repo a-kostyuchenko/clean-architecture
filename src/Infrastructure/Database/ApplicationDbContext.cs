@@ -8,7 +8,7 @@ using Permission = Domain.Roles.Permission;
 namespace Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions options) 
-    : DbContext(options), IApplicationDbContext, IUnitOfWork
+    : DbContext(options), IApplicationDbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }

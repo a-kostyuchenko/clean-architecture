@@ -1,4 +1,5 @@
 using Domain.Users;
+using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Infrastructure.Authorization;
@@ -10,12 +11,7 @@ public class PermissionAuthorizationHandler
         AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        var permissions = context
-            .User
-            .Claims
-            .Where(x => x.Type == CustomClaims.Permissions)
-            .Select(x => x.Value)
-            .ToHashSet();
+        HashSet<string> permissions = context.User.GetPermissions();
 
         if (permissions.Any(p => p == requirement.Permission || p == AdministratorPermission.AccessEverything))
         {

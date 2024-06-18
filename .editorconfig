@@ -353,9 +353,6 @@ dotnet_diagnostic.IDE0053.severity = none
 # IDE0270: Use coalesce expression
 dotnet_diagnostic.IDE0270.severity = none
 
-# IDE0290: Use primary constructor
-dotnet_diagnostic.IDE0290.severity = none
-
 # SonarAnalyzer.CSharp rules
 
 # S112: General or reserved exceptions should never be thrown
@@ -393,3 +390,6 @@ dotnet_diagnostic.S4035.severity = none
 
 # S6966: Awaitable method should be used
 dotnet_diagnostic.S6966.severity = none
+
+# CA1065: Do not raise exceptions in unexpected locations
+dotnet_diagnostic.CA1065.severity = none

@@ -29,6 +29,8 @@ public interface IApplicationDbContext
         where TEntity : Entity;
     void RemoveRange<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : Entity;
+    
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     #endregion
 }

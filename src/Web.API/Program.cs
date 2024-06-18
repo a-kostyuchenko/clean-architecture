@@ -3,7 +3,6 @@ using System.Threading.RateLimiting;
 using Application;
 using Infrastructure;
 using Serilog;
-using Web.API;
 using Web.API.Extensions;
 using Web.API.Infrastructure;
 
@@ -17,8 +16,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services
     .AddHttpContextAccessor()
     .AddApplication()
-    .AddInfrastructure(builder.Configuration)
-    .AddAuthenticationAndAuthorization();
+    .AddInfrastructure(builder.Configuration);
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 

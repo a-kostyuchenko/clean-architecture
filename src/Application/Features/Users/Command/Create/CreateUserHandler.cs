@@ -9,7 +9,6 @@ namespace Application.Features.Users.Command.Create;
 
 internal sealed class CreateUserHandler(
     IApplicationDbContext context,
-    IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher) : ICommandHandler<CreateUserCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -41,7 +40,7 @@ internal sealed class CreateUserHandler(
         
         context.Insert(user);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
         
         return Result.Success(user.Id);
     }

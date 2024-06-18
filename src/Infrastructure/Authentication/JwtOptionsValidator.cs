@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Infrastructure.Authorization;
+namespace Infrastructure.Authentication;
 
 internal sealed class JwtOptionsValidator : AbstractValidator<JwtOptions>
 {
