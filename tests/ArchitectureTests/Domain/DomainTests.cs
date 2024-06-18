@@ -1,4 +1,5 @@
 using System.Reflection;
+using ArchitectureTests.Abstractions;
 using FluentAssertions;
 using NetArchTest.Rules;
 using SharedKernel;
@@ -10,27 +11,25 @@ public class DomainTests : BaseTest
     [Fact]
     public void DomainEvents_Should_BeSealed()
     {
-        TestResult? result = Types.InAssembly(DomainAssembly)
+        Types.InAssembly(DomainAssembly)
             .That()
             .Inherit(typeof(IDomainEvent))
             .Should()
             .BeSealed()
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult()
+            .ShouldBeSuccessful();
     }
 
     [Fact]
     public void DomainEvents_Should_HaveDomainEventPostfix()
     {
-        TestResult? result = Types.InAssembly(DomainAssembly)
+        Types.InAssembly(DomainAssembly)
             .That()
             .Inherit(typeof(IDomainEvent))
             .Should()
             .HaveNameEndingWith("DomainEvent")
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult()
+            .ShouldBeSuccessful();
     }
 
     [Fact]

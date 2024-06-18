@@ -1,3 +1,4 @@
+using ArchitectureTests.Abstractions;
 using FluentAssertions;
 using NetArchTest.Rules;
 
@@ -22,13 +23,12 @@ public class LayerTests : BaseTest
             WebNamespace
         ];
 
-        TestResult? result = Types
+        Types
             .InAssembly(DomainAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult()
+            .ShouldBeSuccessful();
     }
 
     [Fact]
@@ -41,27 +41,24 @@ public class LayerTests : BaseTest
             WebNamespace
         ];
 
-        TestResult? result = Types
+        Types
             .InAssembly(ApplicationAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult().ShouldBeSuccessful();
     }
 
     [Fact]
     public void Handlers_Should_Have_DependencyOnDomain()
     {
-        TestResult? result = Types
+        Types
             .InAssembly(ApplicationAssembly)
             .That()
             .HaveNameEndingWith("Handler")
             .Should()
             .HaveDependencyOn(DomainNamespace)
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult()
+            .ShouldBeSuccessful();
     }
 
     [Fact]
@@ -73,12 +70,11 @@ public class LayerTests : BaseTest
             WebNamespace
         ];
 
-        TestResult? result = Types
+        Types
             .InAssembly(InfrastructureAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue();
+            .GetResult()
+            .ShouldBeSuccessful();
     }
 }
