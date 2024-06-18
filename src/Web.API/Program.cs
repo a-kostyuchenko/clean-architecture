@@ -2,7 +2,6 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 using Application;
 using Infrastructure;
-using Persistence;
 using Serilog;
 using Web.API;
 using Web.API.Extensions;
@@ -19,7 +18,6 @@ builder.Services
     .AddHttpContextAccessor()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
-    .AddPersistence(builder.Configuration)
     .AddAuthenticationAndAuthorization();
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
@@ -66,4 +64,7 @@ app.MapEndpoints();
 
 app.Run();
 
-public partial class Program;
+namespace Web.API
+{
+    public partial class Program;
+}

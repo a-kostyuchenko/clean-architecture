@@ -35,7 +35,6 @@
       <ProjectReference Include="..\..\src\Application\Application.csproj" />
       <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
       <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-      <ProjectReference Include="..\..\src\Persistence\Persistence.csproj" />
       <ProjectReference Include="..\..\src\Web.API\Web.API.csproj" />
     </ItemGroup>
 

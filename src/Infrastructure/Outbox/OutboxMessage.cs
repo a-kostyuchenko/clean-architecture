@@ -1,4 +1,4 @@
-namespace Persistence.Outbox;
+namespace Infrastructure.Outbox;
 
 public sealed record OutboxMessage(
     Guid Id,

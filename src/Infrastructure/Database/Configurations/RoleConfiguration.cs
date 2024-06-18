@@ -1,9 +1,9 @@
 using Domain.Roles;
+using Infrastructure.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.Constants;
 
-namespace Persistence.Configurations;
+namespace Infrastructure.Database.Configurations;
 
 internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {

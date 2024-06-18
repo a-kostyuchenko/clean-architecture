@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using SharedKernel;
 
-namespace Persistence.Interceptors;
+namespace Infrastructure.Database.Interceptors;
 
 internal sealed class UpdateAuditableInterceptor : SaveChangesInterceptor
 {

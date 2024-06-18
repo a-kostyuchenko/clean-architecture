@@ -2,7 +2,7 @@ using System.Data.Common;
 using Application.Abstractions.Data;
 using Npgsql;
 
-namespace Persistence;
+namespace Infrastructure.Database;
 
 public class DbConnectionFactory(NpgsqlDataSource dataSource) : IDbConnectionFactory
 {

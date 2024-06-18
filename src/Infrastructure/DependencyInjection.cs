@@ -1,6 +1,8 @@
 using Application.Abstractions;
 using Application.Abstractions.Caching;
 using Application.Abstractions.Cryptography;
+using Application.Abstractions.Data;
+using Application.Abstractions.Idempotency;
 using Domain.Users;
 using FluentValidation;
 using Hangfire;
@@ -9,11 +11,17 @@ using Infrastructure.Authorization;
 using Infrastructure.Caching;
 using Infrastructure.Clock;
 using Infrastructure.Cryptography;
+using Infrastructure.Database;
+using Infrastructure.Database.Interceptors;
 using Infrastructure.Extensions;
+using Infrastructure.Idempotency;
 using Infrastructure.Outbox;
 using Infrastructure.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Npgsql;
 using SharedKernel;
 
 namespace Infrastructure;
@@ -58,6 +66,37 @@ public static class DependencyInjection
         services.AddHangfireServer(options => options.SchedulePollingInterval = TimeSpan.FromSeconds(1));
 
         services.AddScoped<IProcessOutboxMessagesJob, ProcessOutboxMessagesJob>();
+        
+        string? connection = configuration.GetConnectionString("Database");
+        
+        Ensure.NotNullOrWhiteSpace(connection);
+
+        services.AddSingleton<UpdateDeletableInterceptor>();
+        services.AddSingleton<UpdateAuditableInterceptor>();
+        services.AddSingleton<InsertOutboxMessagesInterceptor>();
+        
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        {
+            options.UseNpgsql(connection).UseSnakeCaseNamingConvention();
+
+            options.AddInterceptors(
+                sp.GetRequiredService<UpdateDeletableInterceptor>(),
+                sp.GetRequiredService<UpdateAuditableInterceptor>(),
+                sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
+        });
+
+        NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(connection).Build();
+        services.TryAddSingleton(npgsqlDataSource);
+
+        services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
+        
+        services.AddScoped<IApplicationDbContext>(sp =>
+            sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IUnitOfWork>(sp =>
+            sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IIdempotencyService, IdempotencyService>();
         
         return services;
     }

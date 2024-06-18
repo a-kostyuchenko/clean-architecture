@@ -1,4 +1,4 @@
-namespace Persistence.Idempotency;
+namespace Infrastructure.Idempotency;
 
 internal sealed class IdempotentRequest
 {

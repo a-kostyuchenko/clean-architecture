@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using Permission = Domain.Roles.Permission;
 
-namespace Persistence;
+namespace Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions options) 
     : DbContext(options), IApplicationDbContext, IUnitOfWork

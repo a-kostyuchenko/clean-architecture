@@ -1,10 +1,11 @@
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
 using Testcontainers.PostgreSql;
+using Web.API;
 
 namespace IntegrationTests;
 

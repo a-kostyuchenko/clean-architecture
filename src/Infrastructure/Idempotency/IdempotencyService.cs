@@ -1,7 +1,8 @@
 using Application.Abstractions.Idempotency;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Idempotency;
+namespace Infrastructure.Idempotency;
 
 internal sealed class IdempotencyService(ApplicationDbContext context) : IIdempotencyService
 {

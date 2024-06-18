@@ -1,10 +1,10 @@
+using Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
-using Persistence.Outbox;
 using SharedKernel;
 
-namespace Persistence.Interceptors;
+namespace Infrastructure.Database.Interceptors;
 
 internal sealed class InsertOutboxMessagesInterceptor : SaveChangesInterceptor
 {

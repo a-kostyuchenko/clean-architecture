@@ -1,10 +1,10 @@
 using System.Reflection;
+using Infrastructure.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.Constants;
 using Permission = Domain.Roles.Permission;
 
-namespace Persistence.Configurations;
+namespace Infrastructure.Database.Configurations;
 
 internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permission>
 {

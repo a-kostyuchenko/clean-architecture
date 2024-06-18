@@ -1,9 +1,9 @@
+using Infrastructure.Constants;
+using Infrastructure.Idempotency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.Constants;
-using Persistence.Idempotency;
 
-namespace Persistence.Configurations;
+namespace Infrastructure.Database.Configurations;
 
 internal sealed class IdempotentRequestConfiguration : IEntityTypeConfiguration<IdempotentRequest>
 {

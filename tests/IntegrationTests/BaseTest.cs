@@ -1,6 +1,6 @@
+using Infrastructure.Database;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
 
 namespace IntegrationTests;
 

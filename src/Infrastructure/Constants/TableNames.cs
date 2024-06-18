@@ -1,4 +1,4 @@
-namespace Persistence.Constants;
+namespace Infrastructure.Constants;
 
 public static class TableNames
 {
