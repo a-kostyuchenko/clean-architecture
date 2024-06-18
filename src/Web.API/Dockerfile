@@ -1,20 +1,27 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
-RUN dotnet restore "WebAPI/WebAPI.csproj"
+COPY ["src/Web.API/Web.API.csproj", "src/Web.API/"]
+COPY ["src/Application/Application.csproj", "src/Application/"]
+COPY ["src/Domain/Domain.csproj", "src/Domain/"]
+COPY ["src/SharedKernel/SharedKernel.csproj", "src/SharedKernel/"]
+COPY ["src/Infrastructure/Infrastructure.csproj", "src/Infrastructure/"]
+RUN dotnet restore "src/Web.API/Web.API.csproj"
 COPY . .
-WORKDIR "/src/WebAPI"
-RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
+WORKDIR "/src/src/Web.API"
+RUN dotnet build "Web.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "Web.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebAPI.dll"]
+ENTRYPOINT ["dotnet", "Web.API.dll"]
