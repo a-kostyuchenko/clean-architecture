@@ -18,6 +18,8 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+builder.Services.AddOpenApi();
+
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -42,6 +44,8 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.ApplyMigrations();
+
+    app.MapOpenApi();
 }
 
 app.UseRequestContextLogging();
