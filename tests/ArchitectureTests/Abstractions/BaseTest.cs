@@ -1,7 +1,7 @@
 using System.Reflection;
 using Domain;
 
-namespace ArchitectureTests;
+namespace ArchitectureTests.Abstractions;
 
 public abstract class BaseTest
 {

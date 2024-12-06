@@ -9,7 +9,7 @@ namespace Infrastructure.Cryptography;
 public class PasswordHasher : IPasswordHasher, IPasswordHashChecker, IDisposable
 {
     private const KeyDerivationPrf Prf = KeyDerivationPrf.HMACSHA256;
-    private const int IterationCount = 10000;
+    private const int IterationCount = 100000;
     private const int NumberOfBytesRequested = 256 / 8;
     private const int SaltSize = 128 / 8;
     private readonly RandomNumberGenerator _rng = RandomNumberGenerator.Create();
