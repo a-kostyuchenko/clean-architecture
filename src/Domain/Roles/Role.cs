@@ -10,6 +10,6 @@ public sealed class Role(int id, string name) : Enumeration<Role>(id, name)
     private readonly List<Permission> _permissions = [];
     private readonly List<User> _users = [];
 
-    public List<Permission> Permissions => _permissions.ToList();
-    public List<User> Users => _users.ToList();
+    public List<Permission> Permissions => [.. _permissions];
+    public List<User> Users => [.. _users];
 }

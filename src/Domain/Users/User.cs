@@ -34,7 +34,7 @@ public class User : Entity, IAuditable, IDeletable
     public DateTime? DeletedOnUtc { get; set; }
     public bool Deleted { get; set; }
 
-    public List<Role> Roles => _roles.ToList();
+    public List<Role> Roles => [.. _roles];
 
 
     public static User Create(FirstName firstName, LastName lastName, Email email, string passwordHash)

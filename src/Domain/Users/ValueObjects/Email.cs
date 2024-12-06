@@ -23,6 +23,6 @@ public sealed record Email
         Result.Create(email, EmailErrors.NullOrEmpty)
             .Ensure(e => !string.IsNullOrWhiteSpace(e), EmailErrors.NullOrEmpty)
             .Ensure(e => e.Length <= MaxLength, EmailErrors.TooLong)
-            .Ensure(e => EmailFormatRegex.Value.IsMatch(e), EmailErrors.InvalidFormat)
+            .Ensure(EmailFormatRegex.Value.IsMatch, EmailErrors.InvalidFormat)
             .Map(e => new Email(e));
 }

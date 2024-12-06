@@ -73,7 +73,7 @@ public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
             .Where(fieldInfo => enumType.IsAssignableFrom(fieldInfo.FieldType))
             .Select(fieldInfo => (TEnum)fieldInfo.GetValue(default)!);
 
-    public static IReadOnlyCollection<TEnum> GetValues() => EnumerationsDictionary.Value.Values.ToList();
+    public static IReadOnlyCollection<TEnum> GetValues() => [.. EnumerationsDictionary.Value.Values];
 
     public static TEnum? FromId(int id) =>
         EnumerationsDictionary.Value.GetValueOrDefault(id);

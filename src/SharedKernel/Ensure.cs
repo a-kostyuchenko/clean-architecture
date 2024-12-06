@@ -7,7 +7,7 @@ public static class Ensure
     public static void NotNullOrWhiteSpace(
         string? value,
         string? message = null,
-        [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -17,7 +17,7 @@ public static class Ensure
 
     public static void NotNull(
         object? value,
-        [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
         if (value is null)
         {
@@ -29,7 +29,7 @@ public static class Ensure
         int value,
         int maxValue,
         string? message = null,
-        [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
         if (value > maxValue)
         {
@@ -40,7 +40,7 @@ public static class Ensure
     public static void NotEmpty(
         Guid value,
         string? message = null,
-        [CallerArgumentExpression("value")] string? paramName = null)
+        [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
         if (value == Guid.Empty)
         {

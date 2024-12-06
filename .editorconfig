@@ -393,3 +393,18 @@ dotnet_diagnostic.S6966.severity = none
 
 # CA1065: Do not raise exceptions in unexpected locations
 dotnet_diagnostic.CA1065.severity = none
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = none
+
+# IDE0021: Use expression body for properties
+dotnet_diagnostic.IDE0021.severity = none
+
+# IDE0022: Use expression body for methods
+dotnet_diagnostic.IDE0022.severity = none
+
+# IDE0320: Remove default parameter values
+dotnet_diagnostic.IDE0320.severity = none
+
+# CA1515: Override method should call base method
+dotnet_diagnostic.CA1515.severity = none

@@ -15,7 +15,7 @@ public abstract class Entity
 
     public Guid Id { get; init; }
 
-    public List<IDomainEvent> DomainEvents => _domainEvents.ToList();
+    public List<IDomainEvent> DomainEvents => [.. _domainEvents];
 
     public void ClearDomainEvents()
     {
