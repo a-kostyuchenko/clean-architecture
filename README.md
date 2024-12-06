@@ -62,10 +62,6 @@ Ensure you have the following installed:
 
 Contributions are welcome! Feel free to submit a pull request or open an issue.
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ## 🌐 Contact
 
 Email - [kosttchka@gmail.com](mailto:kosttchka@gmail.com)
