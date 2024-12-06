@@ -68,6 +68,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 🌐 Contact
 
-Your Name - [Your Email or LinkedIn]
-
-Project Link: [https://github.com/a-kostyuchenko/clean-architecture](https://github.com/a-kostyuchenko/clean-architecture)
+Email - [kosttchka@gmail.com](mailto:kosttchka@gmail.com)
