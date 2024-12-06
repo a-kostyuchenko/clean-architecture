@@ -30,7 +30,7 @@ public sealed class Users : IEndpointGroup
             
             Result<UserResponse> result = await sender.Send(query, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.Match(Results.Ok, ApiResults.Problem);
         })
         .RequirePermission(UserPermission.Read);
 
@@ -42,7 +42,7 @@ public sealed class Users : IEndpointGroup
             
             Result<Guid> result = await sender.Send(command);
             
-            return result.Match(Results.Created, CustomResults.Problem);
+            return result.Match(Results.Created, ApiResults.Problem);
         });
 
         users.MapPut(ApiRoutes.Users.ChangePassword, async (
@@ -54,7 +54,7 @@ public sealed class Users : IEndpointGroup
 
             Result result = await sender.Send(command);
             
-            return result.Match(Results.NoContent, CustomResults.Problem);
+            return result.Match(Results.NoContent, ApiResults.Problem);
         });
     }
 }

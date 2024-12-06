@@ -24,7 +24,7 @@ public sealed class Authentication : IEndpointGroup
 
             Result<LoginResponse> result = await sender.Send(command);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.Match(Results.Ok, ApiResults.Problem);
         });
     }
 }

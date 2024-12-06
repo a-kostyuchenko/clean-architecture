@@ -5,7 +5,7 @@ using SharedKernel.Result;
 
 namespace Web.API.Infrastructure;
 
-public static class CustomResults
+public static class ApiResults
 {
     public static IResult Problem(Result result)
     {
