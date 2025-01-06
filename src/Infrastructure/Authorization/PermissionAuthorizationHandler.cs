@@ -1,4 +1,3 @@
-using Domain.Users;
 using Domain.Users.Permissions;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authorization;

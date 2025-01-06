@@ -2,7 +2,6 @@ using System.Reflection;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using SharedKernel;
 using SharedKernel.Errors;
 using SharedKernel.Result;
 

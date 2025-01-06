@@ -1,5 +1,4 @@
 using ArchitectureTests.Abstractions;
-using FluentAssertions;
 using NetArchTest.Rules;
 
 namespace ArchitectureTests;

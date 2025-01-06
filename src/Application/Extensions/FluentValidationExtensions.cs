@@ -1,5 +1,4 @@
 using FluentValidation;
-using SharedKernel;
 using SharedKernel.Errors;
 
 namespace Application.Extensions;

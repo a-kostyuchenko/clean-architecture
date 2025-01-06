@@ -5,7 +5,6 @@ using Domain.Users;
 using Domain.Users.Errors;
 using Domain.Users.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel;
 using SharedKernel.Result;
 
 namespace Application.Features.Authentication.Commands.Login;

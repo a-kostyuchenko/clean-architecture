@@ -1,7 +1,6 @@
 using Application.Abstractions.Caching;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using SharedKernel;
 using SharedKernel.Result;
 
 namespace Application.Behaviors;

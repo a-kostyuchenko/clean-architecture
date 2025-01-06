@@ -1,4 +1,3 @@
-using Application.Abstractions.Idempotency;
 using Application.Abstractions.Messaging;
 using ArchitectureTests.Abstractions;
 using FluentValidation;

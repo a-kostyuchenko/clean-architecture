@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using SharedKernel;
 using SharedKernel.Result;
 
 namespace Application.Behaviors;

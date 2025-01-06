@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using SharedKernel;
 using SharedKernel.Errors;
 using SharedKernel.Result;
 

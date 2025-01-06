@@ -1,11 +1,9 @@
 using Application.Features.Users.Command.ChangePassword;
 using Application.Features.Users.Command.Create;
 using Application.Features.Users.Queries.GetById;
-using Domain.Users;
 using Domain.Users.Permissions;
 using Mapster;
 using MediatR;
-using SharedKernel;
 using SharedKernel.Result;
 using Web.API.Contracts;
 using Web.API.Extensions;
